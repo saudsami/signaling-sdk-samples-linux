@@ -2,7 +2,7 @@
 *.d
 
 # The build folder
-build/
+/build/
 
 # Compiled Object files
 *.slo
