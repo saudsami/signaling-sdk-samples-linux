@@ -1,5 +1,5 @@
 # CMakeLists.txt
-cmake_minimum_required (VERSION 2.9)
+cmake_minimum_required (VERSION 3.0)
 project(RTMProject)
 
 # Set the build type
@@ -10,7 +10,7 @@ set(CMAKE_CXX_FLAGS "-fPIC -O2 -g -std=c++11 -msse2")
 
 # Define your target
 set(TARGET_NAME RTMQuickStart)
-add_executable(${TARGET_NAME} RTMQuickStart.cpp)
+add_executable(${TARGET_NAME} RTMQuickStart.cpp SignalingManager.cpp)
 
 # Include and link directories
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)

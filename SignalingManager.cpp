@@ -1,4 +1,3 @@
-#include "IAgoraRtmClient.h"
 #include <iostream>
 #include <memory>
 #include <string>
@@ -6,14 +5,11 @@
 #include <fstream> 
 #include <nlohmann/json.hpp>
 
-// Global variables
-std::string appId;
-std::string token;
-std::string uid;
-json config;
+#include "IAgoraRtmClient.h"
 
 using namespace agora::rtm;
 using json = nlohmann::json;
+
 
 class DemoRtmEventHandler : public IRtmEventHandler {
 public:
@@ -76,7 +72,7 @@ public:
     // Create an IRtmClient instance
     signalingEngine = createAgoraRtmClient();
     if (!signalingEngine) {
-      std::cout << RED <<"error creating rtm service!" << std::endl;
+      std::cout << "error creating rtm service!" << std::endl;
       exit(0);
     }
 }
@@ -92,17 +88,17 @@ public:
       int ret = signalingEngine->initialize(cfg);
       // Log in the RTM server
       if (ret) {
-        std::cout << RED <<  "error initializing rtm service: " << ret << std::endl;
+        std::cout << "error initializing rtm service: " << ret << std::endl;
         exit(0);
       }
       ret = signalingEngine->login(token.c_str());
-      std::cout << BOLDBLUE << "login ret:" << ret << std::endl;
+      std::cout << "login ret:" << ret << std::endl;
       if (ret) {
         login();
       }
       // Sample codes for the user interface
-      mainMeun();
-      std::cout << YELLOW << "quit ? yes/no" << std::endl;
+      // mainMeun();
+      std::cout << "quit ? yes/no" << std::endl;
       std::string input;
       std::getline(std::cin, input);
       if (input.compare("yes") == 0) {
@@ -114,7 +110,7 @@ public:
   // Log out from the RTM server
   void logout() {
     int ret = signalingEngine->logout();
-    std::cout << BOLDBLUE <<"logout ret: " << ret << std::endl;
+    std::cout << "logout ret: " << ret << std::endl;
   }
 
   // Subscribe to a channel
@@ -122,14 +118,14 @@ public:
     SubscribeOptions opt = SubscribeOptions();
     uint64_t req_id;
     int ret = signalingEngine->subscribe(chnId.c_str(), opt, req_id);
-    std::cout << BOLDBLUE << "subscribe channel ret:" << ret << std::endl;
+    std::cout << "subscribe channel ret:" << ret << std::endl;
   }
 
   // Unsubscribe from a channel
   void unsubscribeChannel(std::string& chnId) {
     uint64_t req_id;
     int ret = signalingEngine->unsubscribe(chnId.c_str());
-    std::cout << BOLDBLUE << "unsubscribe channel ret:" << ret << std::endl;
+    std::cout << "unsubscribe channel ret:" << ret << std::endl;
   }
   // Publish a message
   void publishMessage(std::string& chn,
@@ -138,78 +134,14 @@ public:
     opt.messageType = RTM_MESSAGE_TYPE_STRING;
     uint64_t req_id;
     int ret = signalingEngine->publish(chn.c_str(), msg.c_str(), msg.size(), opt, req_id);
-    std::cout << BOLDBLUE << "publishMessage ret:" << ret << "request id: %lld" << req_id << std::endl;
-  }
-
-  // Sample codes for the user interface
-  void mainMeun() {
-    bool quit  = false;
-    while (!quit) {
-      std::cout << WHITE << "1: subcribe channel\n"
-                << "2: unsubcribe channel\n"
-                << "3: publish message\n"
-                << "4: logout" <<std::endl;
-      std::cout << YELLOW <<"please input your choice" << std::endl;
-      std::string input;
-      std::getline(std::cin, input);
-      int32_t choice = 0;
-      try {
-        choice = std::stoi(input);
-      } catch(...) {
-        std::cout <<RED << "invalid input" << std::endl;
-        continue;
-      }
-      switch (choice)
-      {
-        case 1: {
-          std::cout << YELLOW << "please input dst channel id" << std::endl;
-          std::string dst;
-          std::getline(std::cin, dst);
-          subscribeChannel(dst);
-        }
-        break;
-        case 2: {
-          std::cout << YELLOW << "please input dst channel id" << std::endl;
-          std::string dst;
-          std::getline(std::cin, dst);
-          unsubscribeChannel(dst);
-        }
-        break;
-        case 3: {
-          std::cout << YELLOW << "please input channel id" << std::endl;
-          std::string channel;
-          std::getline(std::cin, channel);
-          Chat(channel);
-        }
-        break;
-        case 4: {
-          logout();
-          return;
-        }
-        break;
-        default:
-        break;
-      }
-    }
-  }
-
-
-  void Chat(std::string& channel) {
-    std::string message;
-    while (true) {
-      std::cout << YELLOW << "please input message "
-                << "or input \"quit\" to leave groupchat,"
-                << std::endl;
-      std::getline(std::cin, message);
-      if (message.compare("quit") == 0) {
-        return;
-      } else {
-        publishMessage(channel, message);
-      }
-    }
+    std::cout << "publishMessage ret:" << ret << "request id: %lld" << req_id << std::endl;
   }
 
 private:
   std::unique_ptr<IRtmEventHandler> eventHandler_;
   IRtmClient* signalingEngine;
+  std::string appId;
+  std::string token;
+  std::string uid;
+  json config;
 };

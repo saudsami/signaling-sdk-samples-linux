@@ -1,5 +1,0 @@
-/home/saud/git/signaling-sdk-samples-linux/build/CMakeFiles/RTMQuickStart.dir
-/home/saud/git/signaling-sdk-samples-linux/build/CMakeFiles/edit_cache.dir
-/home/saud/git/signaling-sdk-samples-linux/build/CMakeFiles/rebuild_cache.dir
-/home/saud/git/signaling-sdk-samples-linux/build/_deps/json-build/CMakeFiles/edit_cache.dir
-/home/saud/git/signaling-sdk-samples-linux/build/_deps/json-build/CMakeFiles/rebuild_cache.dir
