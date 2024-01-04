@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -O2 -g -std=c++11 -msse2 -g -rdynamic CMakeFiles/RTMQuickStart.dir/RTMQuickStart.cpp.o -o RTMQuickStart   -L/home/saud/git/signaling-sdk-samples-linux/lib  -Wl,-rpath,/home/saud/git/signaling-sdk-samples-linux/lib -lagora_rtm_sdk -lpthread 
