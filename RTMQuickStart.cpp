@@ -5,7 +5,6 @@
 #include <fstream> 
 #include <nlohmann/json.hpp>
 
-//#include "IAgoraRtmClient.h"
 #include "SignalingManager.h"
 
 // Terminal color codes for UBUNTU/LINUX
@@ -27,10 +26,68 @@
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
-// using namespace agora::rtm;
+SignalingManager signalingManager;
+
+void mainMenu() {
+    bool quit  = false;
+    while (!quit) {
+      std::cout << WHITE 
+                << "1: log in to Signaling\n"
+                << "2: subcribe to a channel\n"
+                << "3: unsubcribe from the channel\n"
+                << "4: publish message\n"
+                << "5: logout" <<std::endl;
+      std::cout << YELLOW <<"please input your choice" << std::endl;
+      std::string input;
+      std::getline(std::cin, input);
+      int32_t choice = 0;
+      try {
+        choice = std::stoi(input);
+      } catch(...) {
+        std::cout <<RED << "invalid input" << std::endl;
+        continue;
+      }
+      switch (choice)
+      {
+        case 1: {
+          std::cout << YELLOW << "Logging in to Signaling..." << std::endl;
+          signalingManager.login();
+        }
+        break;
+        case 2: {
+          std::cout << YELLOW << "please input dst channel id" << std::endl;
+          std::string dst;
+          std::getline(std::cin, dst);
+          signalingManager.subscribeChannel(dst);
+        }
+        break;
+        case 3: {
+          std::cout << YELLOW << "please input dst channel id" << std::endl;
+          std::string dst;
+          std::getline(std::cin, dst);
+          signalingManager.unsubscribeChannel(dst);
+        }
+        break;
+        case 4: {
+          std::cout << YELLOW << "please input channel id" << std::endl;
+          std::string channel;
+          std::getline(std::cin, channel);
+          //Chat(channel);
+        }
+        break;
+        case 5: {
+          signalingManager.logout();
+          return;
+        }
+        break;
+        default:
+        break;
+      }
+    }
+}
 
 int main(int argc, const char * argv[]) {
-  SignalingManager messaging;
-  messaging.login();
+  mainMenu();
   return 0;
 }
+  
