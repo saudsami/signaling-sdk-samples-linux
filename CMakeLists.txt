@@ -22,8 +22,8 @@ target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC agora_rtm_sdk pthread nlo
 install(TARGETS ${SIGNALLING_MANAGER_LIB} DESTINATION lib)
 
 # Define your target
-set(TARGET_NAME RTMQuickStart)
-add_executable(${TARGET_NAME} RTMQuickStart.cpp)
+set(TARGET_NAME SignalingDemo)
+add_executable(${TARGET_NAME} SignalingDemo.cpp QuickstartUI.cpp BaseUI.cpp)
 
 # Include and link directories
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)

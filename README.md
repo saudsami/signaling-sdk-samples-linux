@@ -79,7 +79,7 @@ To run the sample projects in this folder, take the following steps:
    To run the reference app, execute the following command in the terminal:
 
    ```shell
-   ./build/RTMQuickStart
+   ./build/SignalingDemo
    ```
 
 ## Contact
