@@ -35,7 +35,7 @@ std::string uid;
 using namespace agora::rtm;
 using json = nlohmann::json;
 
-class DemoRtmEventHandler : public IRtmEventHandler {
+class MyRtmEventHandler : public IRtmEventHandler {
 public:
   // Add the event listener
   void onLoginResult(RTM_ERROR_CODE errorCode) override {
@@ -69,7 +69,7 @@ private:
 class DemoMessaging {
 public:
   DemoMessaging()
-    : eventHandler_(new DemoRtmEventHandler()),
+    : eventHandler_(new MyRtmEventHandler()),
       rtmClient_(nullptr) { Init(); }
 
   void Init() {

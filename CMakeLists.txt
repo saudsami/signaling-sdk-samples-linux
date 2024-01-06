@@ -10,7 +10,7 @@ set(CMAKE_CXX_FLAGS "-fPIC -O2 -g -std=c++11 -msse2")
 
 # Define your library target
 set(SIGNALLING_MANAGER_LIB SignalingManager)
-add_library(${SIGNALLING_MANAGER_LIB} STATIC SignalingManager.cpp)
+add_library(${SIGNALLING_MANAGER_LIB} STATIC SignalingManager.cpp MyRtmEventHandler.cpp)
 
 # Include directory for library users
 target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC ${CMAKE_SOURCE_DIR}/include)
