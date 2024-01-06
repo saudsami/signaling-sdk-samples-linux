@@ -5,12 +5,19 @@ using namespace agora::rtm;
 using json = nlohmann::json;
 
 // Implementation of DemoRtmEventHandler
+// Constructor implementation
+DemoRtmEventHandler::DemoRtmEventHandler(SignalingManager* manager)
+    : signalingManager(manager) {
+}
+
 void DemoRtmEventHandler::onLoginResult(RTM_ERROR_CODE errorCode) {
     cbPrint("onLogin: errorCode: %d", errorCode);
 }
 
 void DemoRtmEventHandler::onConnectionStateChanged(const char *channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason) {
     cbPrint("onConnectionStateChanged: %d", state);
+    bool isLoggedIn = (state == RTM_CONNECTION_STATE_CONNECTED);
+    signalingManager->updateLoginStatus(isLoggedIn);
 }
 
 void DemoRtmEventHandler::onPublishResult(const uint64_t requestId, RTM_ERROR_CODE errorCode) {
@@ -18,7 +25,7 @@ void DemoRtmEventHandler::onPublishResult(const uint64_t requestId, RTM_ERROR_CO
 }
 
 void DemoRtmEventHandler::onMessageEvent(const MessageEvent &event) {
-    cbPrint("receive message from: %s, message: %s", event.publisher, event.message);
+    cbPrint("received message from: %s, message: %s", event.publisher, event.message);
 }
 
 void DemoRtmEventHandler::onSubscribeResult(const uint64_t requestId, const char *channelName, RTM_ERROR_CODE errorCode) {
@@ -36,7 +43,7 @@ void DemoRtmEventHandler::cbPrint(const char* fmt, ...) {
 
 // Implementation of SignalingManager
 SignalingManager::SignalingManager()
-    : eventHandler_(new DemoRtmEventHandler()),
+    : eventHandler_(new DemoRtmEventHandler(this)),
       signalingEngine(nullptr) {
     Init();
 }
@@ -70,6 +77,14 @@ SignalingManager::SignalingManager()
     } else {
       std::cout << "Signaling engine initialized" << std::endl;
     }
+  }
+
+  bool SignalingManager::isLoggedIn() const {
+      return isLoggedIn_;
+  }
+
+  bool SignalingManager::isSubscribed() const {
+      return isSubscribed_;
   }
 
   void SignalingManager::login() {
@@ -129,3 +144,6 @@ SignalingManager::SignalingManager()
     std::cout << "publishMessage ret:" << ret << "request id: %lld" << req_id << std::endl;
   }
 
+  void SignalingManager::updateLoginStatus(bool isLoggedIn) {
+      isLoggedIn_ = isLoggedIn;
+  }

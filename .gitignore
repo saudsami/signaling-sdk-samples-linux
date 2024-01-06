@@ -33,3 +33,8 @@
 *.exe
 *.out
 *.app
+
+# Signaling
+crash_context*
+agorartmdns.dat
+agora_rtm_cache.db

@@ -88,6 +88,7 @@ void mainMenu() {
     }
  }
 
+
 void showCommandList() {
   std::cout << GREEN << "Choose from the following commands:\n"
     << YELLOW << "login" << GREEN << " Log in to Signaling\n"
@@ -110,9 +111,17 @@ void processCommand(std::string input) {
     const std::string& command = tokens[0];
 
     if (command == "login") {
+      if (signalingManager.isLoggedIn()){
+        std::cout << RED << "You are already logged in.\n";
+      } else {
         signalingManager.login();
+      }
     } else if (command == "subscribe" && tokens.size() > 1) {
-        signalingManager.subscribeChannel(tokens[1]);
+      if (signalingManager.isLoggedIn()){
+        signalingManager.subscribeChannel(tokens[1]);  
+      } else {
+        std::cout << RED << "You need to log in first.\n";
+      }
     } else if (command == "unsubscribe" && tokens.size() > 1) {
         signalingManager.unsubscribeChannel(tokens[1]);
     } else if (command == "send" && tokens.size() > 2) {
@@ -124,7 +133,7 @@ void processCommand(std::string input) {
         std::cout << "Quitting the program.\n";
         exit(0);
     } else {
-        std::cout << "Unknown command. Please enter a valid command.\n";
+        std::cout << RED << "Invalid command. Please enter a valid command.\n";
     }
 }
 
