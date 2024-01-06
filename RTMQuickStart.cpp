@@ -1,3 +1,5 @@
+#include <sstream>
+#include <vector>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -69,10 +71,10 @@ void mainMenu() {
         }
         break;
         case 4: {
-          std::cout << YELLOW << "please input channel id" << std::endl;
-          std::string channel;
-          std::getline(std::cin, channel);
-          //Chat(channel);
+          std::cout << YELLOW << "Type your message: ";
+          std::string message;
+          std::getline(std::cin, message);
+          signalingManager.publishMessage("", message);
         }
         break;
         case 5: {
@@ -84,10 +86,59 @@ void mainMenu() {
         break;
       }
     }
+ }
+
+void showCommandList() {
+  std::cout << GREEN << "Choose from the following commands:\n"
+    << YELLOW << "login" << GREEN << " Log in to Signaling\n"
+    << YELLOW << "subscribe <channelName>" << GREEN << " Subscribe to a Signaling channel\n"
+    << YELLOW << "unsubscribe <channelName>" << GREEN << " Unsubscribe from a Signaling channel\n"
+    << YELLOW << "send <channelName> <message>" << GREEN << " Send a <message> to a <channelName> \n"
+    << YELLOW << "logout" << GREEN << " Log out of Signaling\n"
+    << YELLOW << "quit" << GREEN << " Exit this demo\n";
 }
 
-int main(int argc, const char * argv[]) {
-  mainMenu();
-  return 0;
+void processCommand(std::string input) {
+    std::istringstream iss(input);
+        std::vector<std::string> tokens(std::istream_iterator<std::string>{iss},
+                                        std::istream_iterator<std::string>());
+    if (tokens.empty()) {
+        std::cout << "Invalid command. Please enter a valid command.\n";
+        return;
+    }
+
+    const std::string& command = tokens[0];
+
+    if (command == "login") {
+        signalingManager.login();
+    } else if (command == "subscribe" && tokens.size() > 1) {
+        signalingManager.subscribeChannel(tokens[1]);
+    } else if (command == "unsubscribe" && tokens.size() > 1) {
+        signalingManager.unsubscribeChannel(tokens[1]);
+    } else if (command == "send" && tokens.size() > 2) {
+        std::string message = input.substr(input.find(tokens[1]) + tokens[1].length());
+        signalingManager.publishMessage(tokens[1], message);
+    } else if (command == "logout") {
+        signalingManager.logout();
+    } else if (command == "quit") {
+        std::cout << "Quitting the program.\n";
+        exit(0);
+    } else {
+        std::cout << "Unknown command. Please enter a valid command.\n";
+    }
+}
+
+int main(int argc, const char * argv[]) {   
+  std::cout << MAGENTA << "\nWelcome to the Signaling Quickstart demo.\n";
+  showCommandList();
+
+   while (true) {
+        std::cout << ">> ";
+        std::string input;
+        std::getline(std::cin, input);
+        processCommand(input);
+    }
+
+    return 0;
 }
   

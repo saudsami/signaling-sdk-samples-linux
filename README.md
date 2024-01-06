@@ -13,16 +13,16 @@ This repository holds the code examples used for the [Agora Signaling SDK for Li
 
 The runnable code examples are:
 
-- [SDK quickstart](./src/sdk_quickstart/) - the minimum code you need to integrate low-latency, high-concurrency
+- [SDK quickstart](./README.md) - the minimum code you need to integrate low-latency, high-concurrency
   signaling features into your app using Signaling SDK.
-- [Secure authentication with tokens](./src/authentication_workflow/) - quickly set up an authentication token server, retrieve a token from the server, and use it to connect securely to Signaling as a specific user.
-- [Stream channels](./src/stream_channel/) - communicate to other users in topics.
-- [Store channel and user data](./src/storage) - easily store data for users and channels without the need to
+- [Secure authentication with tokens](./README.md) - quickly set up an authentication token server, retrieve a token from the server, and use it to connect securely to Signaling as a specific user.
+- [Stream channels](./README.md) - communicate to other users in topics.
+- [Store channel and user data](./README.md) - easily store data for users and channels without the need to
   set up your own databases. 
-- [Connect through restricted networks with Cloud Proxy](./src/cloud_proxy/) - ensure reliable connectivity for your users when they connect from an
+- [Connect through restricted networks with Cloud Proxy](./README.md) - ensure reliable connectivity for your users when they connect from an
   environment with a restricted network.
-- [Data encryption](./src/data_encryption) - integrate built-in data encryption into your app using Signaling.
-- [Geofencing](./src/geofencing) - only connect to Signaling within the specified region.
+- [Data encryption](./README.md) - integrate built-in data encryption into your app using Signaling.
+- [Geofencing](./README.md) - only connect to Signaling within the specified region.
 
 ## Prerequisites
 

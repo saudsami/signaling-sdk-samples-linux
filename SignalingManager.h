@@ -30,9 +30,9 @@ public:
     void Init();
     void login();
     void logout();
-    void subscribeChannel(std::string& chnId);
-    void unsubscribeChannel(std::string& chnId);
-    void publishMessage(std::string& chn, std::string& msg);
+    void subscribeChannel(std::string chnId);
+    void unsubscribeChannel(std::string chnId);
+    void publishMessage(std::string chn, std::string msg);
 
 private:
     std::unique_ptr<IRtmEventHandler> eventHandler_;
@@ -40,5 +40,6 @@ private:
     std::string appId;
     std::string token;
     std::string uid;
+    std::string channelName;
     json config;
 };

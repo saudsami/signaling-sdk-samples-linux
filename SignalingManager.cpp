@@ -60,12 +60,15 @@ SignalingManager::SignalingManager()
     appId = config["appId"];
     token = config["token"];
     uid = config["uid"];
+    channelName = config["channelName"];
 
     // Create an IRtmClient instance
     signalingEngine = createAgoraRtmClient();
     if (!signalingEngine) {
       std::cout << "error creating rtm service!" << std::endl;
       exit(0);
+    } else {
+      std::cout << "Signaling engine initialized" << std::endl;
     }
   }
 
@@ -77,11 +80,17 @@ SignalingManager::SignalingManager()
       
       // Initialize an IRtmClient instance
       int ret = signalingEngine->initialize(cfg);
-      std::cout << "login ret: " << ret << std::endl;
-      
-      // Log in the RTM server
+      std::cout << "Initialize returned: " << ret << std::endl;
       if (ret) {
-        std::cout << "error initializing rtm service: " << ret << std::endl;
+        std::cout << "Error initializing Signaling service: " << ret << std::endl;
+        exit(0);
+      }
+      
+      // Log in using the token
+      ret = signalingEngine->login(token.c_str());
+      std::cout << "Login returned:" << ret << std::endl;
+      if (ret) {
+        std::cout << "Login failed: " << ret << std::endl;
         exit(0);
       }
   }
@@ -93,7 +102,7 @@ SignalingManager::SignalingManager()
   }
 
   // Subscribe to a channel
-  void SignalingManager::subscribeChannel(std::string& chnId) {
+  void SignalingManager::subscribeChannel(std::string chnId) {
     SubscribeOptions opt = SubscribeOptions();
     uint64_t req_id;
     int ret = signalingEngine->subscribe(chnId.c_str(), opt, req_id);
@@ -101,13 +110,18 @@ SignalingManager::SignalingManager()
   }
 
   // Unsubscribe from a channel
-  void SignalingManager::unsubscribeChannel(std::string& chnId) {
+  void SignalingManager::unsubscribeChannel(std::string chnId) {
     uint64_t req_id;
     int ret = signalingEngine->unsubscribe(chnId.c_str());
     std::cout << "unsubscribe channel ret:" << ret << std::endl;
   }
   // Publish a message
-  void SignalingManager::publishMessage(std::string& chn, std::string& msg) {
+  void SignalingManager::publishMessage(std::string chn, std::string msg) {
+    if (chn.empty()) {
+        // Assign the default value from the config file
+        chn = channelName;
+    }
+
     PublishOptions opt;
     opt.messageType = RTM_MESSAGE_TYPE_STRING;
     uint64_t req_id;
