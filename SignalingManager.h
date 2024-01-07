@@ -14,24 +14,26 @@ using json = nlohmann::json;
 class SignalingManager {
   public:
     SignalingManager();
-    void Init();
-    void login();
-    void logout();
-    void subscribeChannel(std::string chnId);
-    void unsubscribeChannel(std::string chnId);
-    void publishMessage(std::string chn, std::string msg);
+    virtual void Init();
+    virtual void login();
+    virtual void logout();
+    virtual void subscribeChannel(std::string chnId);
+    virtual void unsubscribeChannel(std::string chnId);
+    virtual void publishMessage(std::string chn, std::string msg);
     void updateLoginStatus(bool isLoggedIn);
     bool isLoggedIn() const;
     bool isSubscribed() const;
 
-  private:
-    std::unique_ptr<IRtmEventHandler> eventHandler_;
+  protected:
     IRtmClient* signalingEngine;
+    json config;
+    std::unique_ptr<IRtmEventHandler> eventHandler_;
     std::string appId;
     std::string token;
     std::string uid;
     std::string channelName;
-    json config;
+    
+  private:
     bool isLoggedIn_;
     bool isSubscribed_;
 };

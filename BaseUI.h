@@ -1,4 +1,3 @@
-// BaseUI.h
 #pragma once
 
 #include <iostream>
@@ -13,10 +12,10 @@ public:
     BaseUI(SignalingManager& manager);
     virtual ~BaseUI();
 
-    void showHeader();
-    void showCommandList();
-    void processCommand(std::string input);
-    void run();
+    virtual void showHeader();
+    virtual void showCommandList();
+    virtual void processCommand(std::string input);
+    virtual void run();
 
 protected:
     SignalingManager& signalingManager;

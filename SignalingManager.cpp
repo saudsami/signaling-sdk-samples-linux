@@ -33,14 +33,16 @@ SignalingManager::SignalingManager()
     token = config["token"];
     uid = config["uid"];
     channelName = config["channelName"];
+    isLoggedIn_ = false;
+    isSubscribed_ = false;
 
     // Create an IRtmClient instance
     signalingEngine = createAgoraRtmClient();
     if (!signalingEngine) {
-      std::cout << "error creating rtm service!" << std::endl;
+      std::cout << "Error creating Signaling service!" << std::endl;
       exit(0);
     } else {
-      std::cout << "Signaling engine initialized" << std::endl;
+      // Success creating an IRtmClient instance
     }
   }
 
@@ -58,7 +60,7 @@ SignalingManager::SignalingManager()
       cfg.userId = uid.c_str();
       cfg.eventHandler = eventHandler_.get();
       
-      // Initialize an IRtmClient instance
+      // Initialize the signalingEngine
       int ret = signalingEngine->initialize(cfg);
       std::cout << "Initialize returned: " << ret << std::endl;
       if (ret) {

@@ -34,13 +34,13 @@ void mainMenu() {
       }
       switch (choice)
       {
-        case 1: {
+        case 1: { // SDK Quickstart
             SignalingManager signalingManager;
             QuickStartUI quickStartUI(signalingManager);
             quickStartUI.run();
         }
         break;
-        case 2: {
+        case 2: { // Authentication
             SignalingManagerAuthentication signalingManager;
             AuthenticationWorkflowUI authenticationWorkflowUI(signalingManager);
             authenticationWorkflowUI.run();

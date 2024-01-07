@@ -2,6 +2,12 @@
 #include <nlohmann/json.hpp>
 #include "SignalingManagerAuthentication.h"
 
+SignalingManagerAuthentication::SignalingManagerAuthentication() : SignalingManager() {
+    // Additional initialization if needed
+    tokenExpiryTime = config["tokenExpiryTime"];
+    serverUrl = config["serverUrl"];
+}
+
 
 // Callback function to handle the received data
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* output) {
@@ -10,10 +16,10 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* out
     return totalSize;
 }
 
-std::string SignalingManagerAuthentication::fetchToken(int userId) {
+std::string SignalingManagerAuthentication::fetchToken(std::string userId) {
     // Build the URL with the userId
     std::string url = "https://agora-token-server-5rci.onrender.com/rtm/" 
-        + std::to_string(userId) + "/?expiry=76400";
+        + userId + "/?expiry=76400";
 
     // Initialize cURL
     CURL* curl = curl_easy_init();
@@ -58,4 +64,31 @@ std::string SignalingManagerAuthentication::fetchToken(int userId) {
     }
 
     return "";  // Return an empty string in case of error
+}
+
+void SignalingManagerAuthentication::loginWithToken(std::string userId) {
+    std::cout << "fetching token from the server..." << std::endl;
+    token = fetchToken(userId);
+    uid = userId;
+
+    RtmConfig cfg;
+    cfg.appId = appId.c_str();
+    cfg.userId = uid.c_str();
+    cfg.eventHandler = eventHandler_.get();
+    
+    // Initialize the signalingEngine
+    int ret = signalingEngine->initialize(cfg);
+    std::cout << "Initialize returned: " << ret << std::endl;
+    if (ret) {
+        std::cout << "Error initializing Signaling service: " << ret << std::endl;
+        exit(0);
+    }
+    
+    // Log in using the token
+    ret = signalingEngine->login(token.c_str());
+    std::cout << "Login returned:" << ret << std::endl;
+    if (ret) {
+        std::cout << "Login failed: " << ret << std::endl;
+        exit(0);
+    }
 }

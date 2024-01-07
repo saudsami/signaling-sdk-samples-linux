@@ -4,7 +4,11 @@
 
 class SignalingManagerAuthentication : public SignalingManager {
 public:
-    
-    // Specific methods for DemoExample1
-    std::string fetchToken(int userId);
+    SignalingManagerAuthentication();
+    std::string fetchToken(std::string userId);
+    void loginWithToken(std::string userId);
+
+private:
+    std::string serverUrl;
+    int tokenExpiryTime;
 };
