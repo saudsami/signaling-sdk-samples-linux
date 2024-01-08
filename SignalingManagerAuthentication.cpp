@@ -18,8 +18,8 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* out
 
 std::string SignalingManagerAuthentication::fetchToken(std::string userId) {
     // Build the URL with the userId
-    std::string url = "https://agora-token-server-5rci.onrender.com/rtm/" 
-        + userId + "/?expiry=76400";
+    std::string url = serverUrl + "/rtm/" 
+        + userId + "/?expiry=" +  std::to_string(tokenExpiryTime);
 
     // Initialize cURL
     CURL* curl = curl_easy_init();
