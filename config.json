@@ -5,7 +5,7 @@
     "token": "007eJxSYKirFn546VrOIf8X1oek9XMihW4qLVn3bNLK2Y037q31frtHgcHQPDnJPDXZJNU0xcLE1MTSIiXVIM3cNDU1MdnEyNw4cS33zNQCLUYGXY/3LIwMTAyMDIwMID4zg6GRMSAAAP//mu0gWg==",
     "proxyUrl": "http://localhost:8080/",
     "serverUrl": "https://agora-token-server-5rci.onrender.com",
-    "tokenExpiryTime": 3600,
+    "tokenExpiryTime": 60,
     "encryptionMode": 2,
     "salt": "KAIjH2XDVtspE2DemhmQbdNzG+QgCCKKRshR8z64HIM=",
     "cipherKey": "cad17aa3fd677f12abfaf7a562ebac2b42d180877fe3021a106561f586ef3402",

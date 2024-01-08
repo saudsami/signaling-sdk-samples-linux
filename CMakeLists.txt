@@ -10,7 +10,12 @@ set(CMAKE_CXX_FLAGS "-fPIC -O2 -g -std=c++11 -msse2")
 
 # Define your library target
 set(SIGNALLING_MANAGER_LIB SignalingManager)
-add_library(${SIGNALLING_MANAGER_LIB} STATIC SignalingManager.cpp MyRtmEventHandler.cpp SignalingManagerAuthentication.cpp)
+add_library(${SIGNALLING_MANAGER_LIB} STATIC
+    SignalingManager.cpp
+    MyRtmEventHandler.cpp
+    SignalingManagerAuthentication.cpp
+    AuthenticationEventHandler.cpp
+)
 
 # Include directory for library users
 target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC ${CMAKE_SOURCE_DIR}/include)
@@ -20,7 +25,7 @@ target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC agora_rtm_sdk pthread nlo
 
 # Add libcurl
 find_package(CURL REQUIRED)
-include_directories(${CURL_INCLUDE_DIR})
+target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC ${CURL_INCLUDE_DIRS})
 target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC ${CURL_LIBRARIES})
 
 # Optionally, you can install the library

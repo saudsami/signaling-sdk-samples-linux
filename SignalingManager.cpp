@@ -108,7 +108,7 @@ SignalingManager::SignalingManager()
     opt.messageType = RTM_MESSAGE_TYPE_STRING;
     uint64_t req_id;
     int ret = signalingEngine->publish(chn.c_str(), msg.c_str(), msg.size(), opt, req_id);
-    std::cout << "publishMessage ret:" << ret << "request id: %lld" << req_id << std::endl;
+    std::cout << "publishMessage ret:" << ret << " request id: %llu" << req_id << std::endl;
   }
 
   void SignalingManager::updateLoginStatus(bool isLoggedIn) {

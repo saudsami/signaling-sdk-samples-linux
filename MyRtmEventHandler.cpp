@@ -5,8 +5,6 @@
 using namespace agora::rtm;
 using json = nlohmann::json;
 
-// Implementation of MyRtmEventHandler
-// Constructor implementation
 MyRtmEventHandler::MyRtmEventHandler(SignalingManager* manager)
     : signalingManager(manager) {
 }
@@ -22,7 +20,7 @@ void MyRtmEventHandler::onConnectionStateChanged(const char *channelName, RTM_CO
 }
 
 void MyRtmEventHandler::onPublishResult(const uint64_t requestId, RTM_ERROR_CODE errorCode) {
-    cbPrint("onPublishResult request id: %lld result: %d", requestId, errorCode);
+    cbPrint("onPublishResult request id: %llu result: %d", requestId, errorCode);
 }
 
 void MyRtmEventHandler::onMessageEvent(const MessageEvent &event) {
@@ -30,7 +28,7 @@ void MyRtmEventHandler::onMessageEvent(const MessageEvent &event) {
 }
 
 void MyRtmEventHandler::onSubscribeResult(const uint64_t requestId, const char *channelName, RTM_ERROR_CODE errorCode) {
-    cbPrint("onSubscribeResult: channel:%s, request id: %lld result: %d", channelName, requestId, errorCode);
+    cbPrint("onSubscribeResult: channel:%s, request id: %llu result: %d", channelName, requestId, errorCode);
 }
 
 void MyRtmEventHandler::cbPrint(const char* fmt, ...) {

@@ -2,12 +2,14 @@
 #include <nlohmann/json.hpp>
 #include "SignalingManagerAuthentication.h"
 
-SignalingManagerAuthentication::SignalingManagerAuthentication() : SignalingManager() {
-    // Additional initialization if needed
+
+SignalingManagerAuthentication::SignalingManagerAuthentication()
+    : SignalingManager() {
+    // Additional initialization 
+    eventHandler_ = std::unique_ptr<AuthenticationEventHandler>(new AuthenticationEventHandler(this));
     tokenExpiryTime = config["tokenExpiryTime"];
     serverUrl = config["serverUrl"];
 }
-
 
 // Callback function to handle the received data
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* output) {
@@ -67,7 +69,7 @@ std::string SignalingManagerAuthentication::fetchToken(std::string userId) {
 }
 
 void SignalingManagerAuthentication::loginWithToken(std::string userId) {
-    std::cout << "fetching token from the server..." << std::endl;
+    std::cout << "Fetching token from the server..." << std::endl;
     token = fetchToken(userId);
     uid = userId;
 
@@ -91,4 +93,10 @@ void SignalingManagerAuthentication::loginWithToken(std::string userId) {
         std::cout << "Login failed: " << ret << std::endl;
         exit(0);
     }
+}
+
+int SignalingManagerAuthentication::renewToken() {
+    std::cout << "Fetching token for renewal..." << std::endl;
+    token = fetchToken(uid);
+    return signalingEngine->renewToken(token.c_str());
 }
