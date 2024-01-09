@@ -10,17 +10,20 @@
 
 #include "SignalingManager.h"
 #include "SignalingManagerAuthentication.h"
+#include "SignalingManagerPresence.h"
 
 #include "QuickstartUI.h"
 #include "AuthenticationWorkflowUI.h"
+#include "PresenceUI.h"
 
 void mainMenu() {
     bool quit  = false;
     while (!quit) {
       std::cout << WHITE << "1: SDK quickstart\n"
                 << "2: Token authentication\n"
-                << "3: Stream channels quickstart\n"
-                << "4: Presence\n"
+                << "3: Presence\n"
+                << "4: Stream channels quickstart\n"
+                << "5: Presence\n"
                 << "0: Exit\n" << std::endl;
       std::cout << YELLOW <<"Choose an example: ";
       std::string input;
@@ -47,7 +50,9 @@ void mainMenu() {
         }
         break;
         case 3: {
-
+           SignalingManagerPresence signalingManager;
+           PresenceUI presenceUI(signalingManager);
+           presenceUI.run();
         }
         break;
         case 0: {

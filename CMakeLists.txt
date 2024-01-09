@@ -15,6 +15,8 @@ add_library(${SIGNALLING_MANAGER_LIB} STATIC
     sdk-quickstart/BaseSignalingEventHandler.cpp
     authentication-workflow/SignalingManagerAuthentication.cpp
     authentication-workflow/AuthenticationEventHandler.cpp
+    presence/SignalingManagerPresence.cpp
+    presence/PresenceEventHandler.cpp
 )
 
 # Include directory for library users
@@ -29,6 +31,7 @@ target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC
     ${CURL_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/sdk-quickstart 
     ${CMAKE_SOURCE_DIR}/authentication-workflow
+    ${CMAKE_SOURCE_DIR}/presence
 )
 target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC ${CURL_LIBRARIES})
 
@@ -39,9 +42,10 @@ install(TARGETS ${SIGNALLING_MANAGER_LIB} DESTINATION lib)
 set(TARGET_NAME SignalingDemo)
 add_executable(${TARGET_NAME} 
     SignalingDemo.cpp 
-    sdk-quickstart/QuickstartUI.cpp 
     BaseUI.cpp 
+    sdk-quickstart/QuickstartUI.cpp 
     authentication-workflow/AuthenticationWorkflowUI.cpp
+    presence/PresenceUI.cpp
 )
 
 # Include and link directories
