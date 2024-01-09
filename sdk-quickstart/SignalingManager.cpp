@@ -1,49 +1,14 @@
+#include "BaseSignalingEventHandler.h"
 #include "SignalingManager.h"
 #include "IAgoraRtmClient.h"
 
 using namespace agora::rtm;
 using json = nlohmann::json;
 
-// Implementation of DemoRtmEventHandler
-// Constructor implementation
-DemoRtmEventHandler::DemoRtmEventHandler(SignalingManager* manager)
-    : signalingManager(manager) {
-}
-
-void DemoRtmEventHandler::onLoginResult(RTM_ERROR_CODE errorCode) {
-    cbPrint("onLogin: errorCode: %d", errorCode);
-}
-
-void DemoRtmEventHandler::onConnectionStateChanged(const char *channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason) {
-    cbPrint("onConnectionStateChanged: %d", state);
-    bool isLoggedIn = (state == RTM_CONNECTION_STATE_CONNECTED);
-    signalingManager->updateLoginStatus(isLoggedIn);
-}
-
-void DemoRtmEventHandler::onPublishResult(const uint64_t requestId, RTM_ERROR_CODE errorCode) {
-    cbPrint("onPublishResult request id: %lld result: %d", requestId, errorCode);
-}
-
-void DemoRtmEventHandler::onMessageEvent(const MessageEvent &event) {
-    cbPrint("received message from: %s, message: %s", event.publisher, event.message);
-}
-
-void DemoRtmEventHandler::onSubscribeResult(const uint64_t requestId, const char *channelName, RTM_ERROR_CODE errorCode) {
-    cbPrint("onSubscribeResult: channel:%s, request id: %lld result: %d", channelName, requestId, errorCode);
-}
-
-void DemoRtmEventHandler::cbPrint(const char* fmt, ...) {
-    printf("\x1b[32m<< RTM async callback: ");
-    va_list args;
-    va_start(args, fmt);
-    vprintf(fmt, args);
-    va_end(args);
-    printf(" >>\x1b[0m\n");
-}
 
 // Implementation of SignalingManager
 SignalingManager::SignalingManager()
-    : eventHandler_(new DemoRtmEventHandler(this)),
+    : eventHandler_(new BaseSignalingEventHandler(this)),
       signalingEngine(nullptr) {
     Init();
 }
@@ -68,14 +33,16 @@ SignalingManager::SignalingManager()
     token = config["token"];
     uid = config["uid"];
     channelName = config["channelName"];
+    isLoggedIn_ = false;
+    isSubscribed_ = false;
 
     // Create an IRtmClient instance
     signalingEngine = createAgoraRtmClient();
     if (!signalingEngine) {
-      std::cout << "error creating rtm service!" << std::endl;
+      std::cout << "Error creating Signaling service!" << std::endl;
       exit(0);
     } else {
-      std::cout << "Signaling engine initialized" << std::endl;
+      // Success creating an IRtmClient instance
     }
   }
 
@@ -93,9 +60,9 @@ SignalingManager::SignalingManager()
       cfg.userId = uid.c_str();
       cfg.eventHandler = eventHandler_.get();
       
-      // Initialize an IRtmClient instance
+      // Initialize the signalingEngine
       int ret = signalingEngine->initialize(cfg);
-      std::cout << "Initialize returned: " << ret << std::endl;
+      std::cout << "initialize returned: " << ret << std::endl;
       if (ret) {
         std::cout << "Error initializing Signaling service: " << ret << std::endl;
         exit(0);
@@ -103,17 +70,18 @@ SignalingManager::SignalingManager()
       
       // Log in using the token
       ret = signalingEngine->login(token.c_str());
-      std::cout << "Login returned:" << ret << std::endl;
       if (ret) {
-        std::cout << "Login failed: " << ret << std::endl;
+        std::cout << "login failed: " << ret << std::endl;
         exit(0);
+      } else {
+        std::cout << "login returned: " << ret << std::endl;
       }
   }
 
   // Log out from the RTM server
   void SignalingManager::logout() {
     int ret = signalingEngine->logout();
-    std::cout << "logout ret: " << ret << std::endl;
+    std::cout << "logout returned:  " << ret << std::endl;
   }
 
   // Subscribe to a channel
@@ -121,14 +89,14 @@ SignalingManager::SignalingManager()
     SubscribeOptions opt = SubscribeOptions();
     uint64_t req_id;
     int ret = signalingEngine->subscribe(chnId.c_str(), opt, req_id);
-    std::cout << "subscribe channel ret:" << ret << std::endl;
+    std::cout << "subscribe channel returned: " << ret << std::endl;
   }
 
   // Unsubscribe from a channel
   void SignalingManager::unsubscribeChannel(std::string chnId) {
     uint64_t req_id;
     int ret = signalingEngine->unsubscribe(chnId.c_str());
-    std::cout << "unsubscribe channel ret:" << ret << std::endl;
+    std::cout << "unsubscribe channel returned: " << ret << std::endl;
   }
   // Publish a message
   void SignalingManager::publishMessage(std::string chn, std::string msg) {
@@ -141,9 +109,26 @@ SignalingManager::SignalingManager()
     opt.messageType = RTM_MESSAGE_TYPE_STRING;
     uint64_t req_id;
     int ret = signalingEngine->publish(chn.c_str(), msg.c_str(), msg.size(), opt, req_id);
-    std::cout << "publishMessage ret:" << ret << "request id: %lld" << req_id << std::endl;
+    std::cout << "publishMessage returned: " << ret << " request id: %llu" << req_id << std::endl;
   }
 
   void SignalingManager::updateLoginStatus(bool isLoggedIn) {
       isLoggedIn_ = isLoggedIn;
   }
+
+std::string SignalingManager::getConnectionStateDescription(int connectionState) {
+    switch (connectionState) {
+        case 1:
+            return "Disconnected from the server.";
+        case 2:
+            return "Connecting to the server.";
+        case 3:
+            return "Connected to the server.";
+        case 4:
+            return "Reconnecting to the server.";
+        case 5:
+            return "Cannot connect to the server.";
+        default:
+            return "Unknown connection state: " + std::to_string(connectionState);
+    }
+}
