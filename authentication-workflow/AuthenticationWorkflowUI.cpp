@@ -1,5 +1,5 @@
 #include "AuthenticationWorkflowUI.h"
-#include "TerminalColors.h"
+#include "../TerminalColors.h"
 
 AuthenticationWorkflowUI::AuthenticationWorkflowUI(SignalingManagerAuthentication& signalingManager)
     : BaseUI(signalingManager), signalingManagerAuthentication(signalingManager) {

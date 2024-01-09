@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SignalingManager.h"
+#include "../sdk-quickstart/SignalingManager.h"
 #include "AuthenticationEventHandler.h"
 
 class SignalingManagerAuthentication : public SignalingManager {

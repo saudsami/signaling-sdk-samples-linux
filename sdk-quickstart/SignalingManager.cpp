@@ -1,4 +1,4 @@
-#include "MyRtmEventHandler.h"
+#include "BaseSignalingEventHandler.h"
 #include "SignalingManager.h"
 #include "IAgoraRtmClient.h"
 
@@ -8,7 +8,7 @@ using json = nlohmann::json;
 
 // Implementation of SignalingManager
 SignalingManager::SignalingManager()
-    : eventHandler_(new MyRtmEventHandler(this)),
+    : eventHandler_(new BaseSignalingEventHandler(this)),
       signalingEngine(nullptr) {
     Init();
 }
@@ -80,7 +80,7 @@ SignalingManager::SignalingManager()
   // Log out from the RTM server
   void SignalingManager::logout() {
     int ret = signalingEngine->logout();
-    std::cout << "logout ret: " << ret << std::endl;
+    std::cout << "logout returned:  " << ret << std::endl;
   }
 
   // Subscribe to a channel
@@ -88,14 +88,14 @@ SignalingManager::SignalingManager()
     SubscribeOptions opt = SubscribeOptions();
     uint64_t req_id;
     int ret = signalingEngine->subscribe(chnId.c_str(), opt, req_id);
-    std::cout << "subscribe channel ret:" << ret << std::endl;
+    std::cout << "subscribe channel returned: " << ret << std::endl;
   }
 
   // Unsubscribe from a channel
   void SignalingManager::unsubscribeChannel(std::string chnId) {
     uint64_t req_id;
     int ret = signalingEngine->unsubscribe(chnId.c_str());
-    std::cout << "unsubscribe channel ret:" << ret << std::endl;
+    std::cout << "unsubscribe channel returned: " << ret << std::endl;
   }
   // Publish a message
   void SignalingManager::publishMessage(std::string chn, std::string msg) {
@@ -108,9 +108,26 @@ SignalingManager::SignalingManager()
     opt.messageType = RTM_MESSAGE_TYPE_STRING;
     uint64_t req_id;
     int ret = signalingEngine->publish(chn.c_str(), msg.c_str(), msg.size(), opt, req_id);
-    std::cout << "publishMessage ret:" << ret << " request id: %llu" << req_id << std::endl;
+    std::cout << "publishMessage returned: " << ret << " request id: %llu" << req_id << std::endl;
   }
 
   void SignalingManager::updateLoginStatus(bool isLoggedIn) {
       isLoggedIn_ = isLoggedIn;
   }
+
+std::string SignalingManager::getConnectionStateDescription(int connectionState) {
+    switch (connectionState) {
+        case 1:
+            return "Disconnected from the server.";
+        case 2:
+            return "Connecting to the server.";
+        case 3:
+            return "Connected to the server.";
+        case 4:
+            return "Reconnecting to the server.";
+        case 5:
+            return "Cannot connect to the server.";
+        default:
+            return "Unknown connection state: " + std::to_string(connectionState);
+    }
+}

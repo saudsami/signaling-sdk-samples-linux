@@ -96,7 +96,7 @@ void SignalingManagerAuthentication::loginWithToken(std::string userId) {
 }
 
 int SignalingManagerAuthentication::renewToken() {
-    std::cout << "Fetching token for renewal..." << std::endl;
+    std::cout << "Fetching token to renew expiring token...\n" << std::endl;
     token = fetchToken(uid);
     return signalingEngine->renewToken(token.c_str());
 }

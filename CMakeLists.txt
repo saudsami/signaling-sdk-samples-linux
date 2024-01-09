@@ -11,10 +11,10 @@ set(CMAKE_CXX_FLAGS "-fPIC -O2 -g -std=c++11 -msse2")
 # Define your library target
 set(SIGNALLING_MANAGER_LIB SignalingManager)
 add_library(${SIGNALLING_MANAGER_LIB} STATIC
-    SignalingManager.cpp
-    MyRtmEventHandler.cpp
-    SignalingManagerAuthentication.cpp
-    AuthenticationEventHandler.cpp
+    sdk-quickstart/SignalingManager.cpp
+    sdk-quickstart/BaseSignalingEventHandler.cpp
+    authentication-workflow/SignalingManagerAuthentication.cpp
+    authentication-workflow/AuthenticationEventHandler.cpp
 )
 
 # Include directory for library users
@@ -25,7 +25,11 @@ target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC agora_rtm_sdk pthread nlo
 
 # Add libcurl
 find_package(CURL REQUIRED)
-target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC ${CURL_INCLUDE_DIRS})
+target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC 
+    ${CURL_INCLUDE_DIRS}
+    ${CMAKE_SOURCE_DIR}/sdk-quickstart 
+    ${CMAKE_SOURCE_DIR}/authentication-workflow
+)
 target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC ${CURL_LIBRARIES})
 
 # Optionally, you can install the library
@@ -33,7 +37,12 @@ install(TARGETS ${SIGNALLING_MANAGER_LIB} DESTINATION lib)
 
 # Define your target
 set(TARGET_NAME SignalingDemo)
-add_executable(${TARGET_NAME} SignalingDemo.cpp QuickstartUI.cpp BaseUI.cpp AuthenticationWorkflowUI.cpp)
+add_executable(${TARGET_NAME} 
+    SignalingDemo.cpp 
+    sdk-quickstart/QuickstartUI.cpp 
+    BaseUI.cpp 
+    authentication-workflow/AuthenticationWorkflowUI.cpp
+)
 
 # Include and link directories
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)

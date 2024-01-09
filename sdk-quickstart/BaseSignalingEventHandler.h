@@ -12,9 +12,9 @@
 using namespace agora::rtm;
 using json = nlohmann::json;
 
-class MyRtmEventHandler : public IRtmEventHandler {
+class BaseSignalingEventHandler : public IRtmEventHandler {
   public:
-    MyRtmEventHandler(SignalingManager* manager);
+    BaseSignalingEventHandler(SignalingManager* manager);
     // Add the event listener
     void onMessageEvent(const MessageEvent &event) override;
 

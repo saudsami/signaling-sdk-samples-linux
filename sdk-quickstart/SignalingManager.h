@@ -23,6 +23,7 @@ class SignalingManager {
     void updateLoginStatus(bool isLoggedIn);
     bool isLoggedIn() const;
     bool isSubscribed() const;
+    static std::string getConnectionStateDescription(int connectionState);
 
   protected:
     IRtmClient* signalingEngine;

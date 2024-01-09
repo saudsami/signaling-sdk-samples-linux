@@ -2,9 +2,9 @@
 
 class SignalingManagerAuthentication; 
 
-#include "MyRtmEventHandler.h"
+#include "../sdk-quickstart/BaseSignalingEventHandler.h"
 
-class AuthenticationEventHandler : public MyRtmEventHandler {
+class AuthenticationEventHandler : public BaseSignalingEventHandler {
 public:
     AuthenticationEventHandler(SignalingManager* manager);
 

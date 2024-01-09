@@ -21,7 +21,7 @@ void mainMenu() {
                 << "2: Token authentication\n"
                 << "3: Stream channels quickstart\n"
                 << "4: Presence\n"
-                << "8: Exit\n" << std::endl;
+                << "0: Exit\n" << std::endl;
       std::cout << YELLOW <<"Choose an example: ";
       std::string input;
       std::getline(std::cin, input);
@@ -50,7 +50,7 @@ void mainMenu() {
 
         }
         break;
-        case 8: {
+        case 0: {
 
           return;
         }
