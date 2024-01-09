@@ -52,7 +52,7 @@ void BaseUI::processCommand(std::string input) {
     } else if (command == "logout") {
         signalingManager.logout();
     } else if (command == "quit") {
-        std::cout << "Quitting the program.\n";
+        std::cout << "Exiting the demo.\n";
         exit(0);
     } else {
         std::cout << RED << "Invalid command. Please enter a valid command.\n";

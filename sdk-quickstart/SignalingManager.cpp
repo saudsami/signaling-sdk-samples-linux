@@ -62,7 +62,7 @@ SignalingManager::SignalingManager()
       
       // Initialize the signalingEngine
       int ret = signalingEngine->initialize(cfg);
-      std::cout << "Initialize returned: " << ret << std::endl;
+      std::cout << "initialize returned: " << ret << std::endl;
       if (ret) {
         std::cout << "Error initializing Signaling service: " << ret << std::endl;
         exit(0);
@@ -70,10 +70,11 @@ SignalingManager::SignalingManager()
       
       // Log in using the token
       ret = signalingEngine->login(token.c_str());
-      std::cout << "Login returned:" << ret << std::endl;
       if (ret) {
-        std::cout << "Login failed: " << ret << std::endl;
+        std::cout << "login failed: " << ret << std::endl;
         exit(0);
+      } else {
+        std::cout << "login returned: " << ret << std::endl;
       }
   }
 
