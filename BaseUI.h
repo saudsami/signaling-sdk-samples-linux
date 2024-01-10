@@ -7,9 +7,10 @@
 #include <iterator>
 #include "SignalingManager.h"
 
-class BaseUI {
+class BaseUI
+{
 public:
-    BaseUI(SignalingManager& manager);
+    BaseUI(SignalingManager &manager);
     virtual ~BaseUI();
 
     virtual void showHeader();
@@ -18,5 +19,5 @@ public:
     virtual void run();
 
 protected:
-    SignalingManager& signalingManager;
+    SignalingManager &signalingManager;
 };

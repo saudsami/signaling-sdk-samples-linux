@@ -3,7 +3,8 @@
 #include "../sdk-quickstart/SignalingManager.h"
 #include "AuthenticationEventHandler.h"
 
-class SignalingManagerAuthentication : public SignalingManager {
+class SignalingManagerAuthentication : public SignalingManager
+{
 public:
     SignalingManagerAuthentication();
     std::string fetchToken(std::string userId);

@@ -2,7 +2,8 @@
 
 #include "../BaseUI.h"
 
-class QuickStartUI : public BaseUI {
+class QuickStartUI : public BaseUI
+{
 public:
-    QuickStartUI(SignalingManager& manager);
+    QuickStartUI(SignalingManager &manager);
 };
