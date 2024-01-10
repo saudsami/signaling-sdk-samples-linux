@@ -6,7 +6,7 @@
 class SignalingManagerPresence : public SignalingManagerAuthentication {
 public:
     SignalingManagerPresence();
-
+    void getOnlineUsers(std::string);
 private:
 
 };

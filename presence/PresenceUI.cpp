@@ -2,7 +2,7 @@
 #include "../TerminalColors.h"
 
 PresenceUI::PresenceUI(SignalingManagerPresence& signalingManager)
-    : BaseUI(signalingManager), signalingManagerPresence(signalingManager) {
+    : AuthenticationWorkflowUI(signalingManager), signalingManagerPresence(signalingManager) {
     // Additional initialization if needed
 }
 
@@ -11,15 +11,15 @@ void PresenceUI::showHeader() {
 }
 
 void PresenceUI::showCommandList() {
-    std::cout << GREEN << "Choose from the following commands:\n"
-        << YELLOW << "login <UserId>" << GREEN << " Acquire a token for <UserId> and log in to Signaling\n"
-        << YELLOW << "subscribe <channelName>" << GREEN << " Subscribe to a Signaling channel\n"
-        << YELLOW << "unsubscribe <channelName>" << GREEN << " Unsubscribe from a Signaling channel\n"
-        << YELLOW << "send <channelName> <message>" << GREEN << " Send a <message> to a <channelName> \n"
-        << YELLOW << "logout" << GREEN << " Log out of Signaling\n"
-        << YELLOW << "quit" << GREEN << " Exit this demo\n";
-}
+    AuthenticationWorkflowUI::showCommandList();
 
+    std::cout << "Presence commands:\n"
+        << YELLOW << "getOnlineUsers " << GREEN << " List channels that a specified user has subscribed to or joined\n"
+        << YELLOW << "getUserChannels" << GREEN << "  Query information about online users in a channel\n"
+        << YELLOW << "setState" << GREEN << " Customize the temporary user state\n"
+        << YELLOW << "getState <channelName>" << GREEN << " Get the temporary user state of a specified user\n"
+        << YELLOW << "removeState" << GREEN << " Remove one or more of your temporary states \n";
+}
 void PresenceUI::processCommand(std::string input) {
     std::istringstream iss(input);
     std::vector<std::string> tokens(std::istream_iterator<std::string>{iss},
@@ -31,29 +31,9 @@ void PresenceUI::processCommand(std::string input) {
 
     const std::string& command = tokens[0];
 
-    if (command == "login" && tokens.size() > 1) {
-      if (signalingManager.isLoggedIn()){
-        std::cout << RED << "You are already logged in.\n";
-      } else {
-        signalingManagerPresence.loginWithToken(tokens[1]);
-      }
-    } else if (command == "subscribe" && tokens.size() > 1) {
-      if (signalingManager.isLoggedIn()){
-        signalingManager.subscribeChannel(tokens[1]);  
-      } else {
-        std::cout << RED << "You need to log in first.\n";
-      }
-    } else if (command == "unsubscribe" && tokens.size() > 1) {
-        signalingManager.unsubscribeChannel(tokens[1]);
-    } else if (command == "send" && tokens.size() > 2) {
-        std::string message = input.substr(input.find(tokens[1]) + tokens[1].length());
-        signalingManager.publishMessage(tokens[1], message);
-    } else if (command == "logout") {
-        signalingManager.logout();
-    } else if (command == "quit") {
-        std::cout << "Quitting the program.\n";
-        exit(0);
+    if (command == "getOnlineUsers" && tokens.size() > 1) {
+
     } else {
-        std::cout << RED << "Invalid command. Please enter a valid command.\n";
+      AuthenticationWorkflowUI::processCommand(input);
     }
 }

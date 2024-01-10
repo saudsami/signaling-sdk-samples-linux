@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../BaseUI.h"
+#include "../authentication-workflow/AuthenticationWorkflowUI.h"
 #include "SignalingManagerPresence.h"
 
-class PresenceUI : public BaseUI {
+class PresenceUI : public AuthenticationWorkflowUI {
 public:
     PresenceUI(SignalingManagerPresence& manager);
     void showHeader() override;
