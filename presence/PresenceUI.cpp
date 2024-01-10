@@ -13,12 +13,12 @@ void PresenceUI::showHeader() {
 void PresenceUI::showCommandList() {
     AuthenticationWorkflowUI::showCommandList();
 
-    std::cout << "Presence commands:\n"
+    std::cout << WHITE << "Presence commands:\n"
         << YELLOW << "getOnlineUsers <channelName>" << GREEN << "  Query information about online users in a channel\n"
         << YELLOW << "getUserChannels <userId>" << GREEN << " List channels that a specified user has subscribed to or joined\n"
-        << YELLOW << "setState <userId>" << GREEN << " Customize the temporary user state\n"
-        << YELLOW << "getState <channelName>" << GREEN << " Get the temporary user state of a specified user\n"
-        << YELLOW << "removeState" << GREEN << " Remove one or more of your temporary states \n";
+        << YELLOW << "setState <channelName> <key> <value>" << GREEN << " Customize the temporary user state\n"
+        << YELLOW << "getState <channelName> <userId>" << GREEN << " Get the temporary user state of a specified user\n"
+        << YELLOW << "removeState <channelName> <key>" << GREEN << " Remove a temporary state \n";
 }
 void PresenceUI::processCommand(std::string input) {
     std::istringstream iss(input);
@@ -34,7 +34,13 @@ void PresenceUI::processCommand(std::string input) {
     if (command == "getOnlineUsers" && tokens.size() > 1) {
         signalingManagerPresence.getOnlineUsers(tokens[1]);  
     } else if (command == "getUserChannels" && tokens.size() > 1) {
-        signalingManagerPresence.getUserChannels(tokens[1]);  
+      signalingManagerPresence.getUserChannels(tokens[1]);
+    } else if (command == "getState" && tokens.size() > 1) {
+      signalingManagerPresence.getState(tokens[1], tokens[2]);
+    } else if (command == "setState" && tokens.size() > 1) {
+      signalingManagerPresence.setState(tokens[1], tokens[2], tokens[3]);
+    } else if (command == "removeState" && tokens.size() > 1) {
+      signalingManagerPresence.removeState(tokens[1], tokens[2]);
     } else {
         AuthenticationWorkflowUI::processCommand(input);
     }

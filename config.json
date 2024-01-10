@@ -9,7 +9,7 @@
     "encryptionMode": 2,
     "salt": "KAIjH2XDVtspE2DemhmQbdNzG+QgCCKKRshR8z64HIM=",
     "cipherKey": "cad17aa3fd677f12abfaf7a562ebac2b42d180877fe3021a106561f586ef3402",
-    "presenceTimeout": 600,
+    "presenceTimeout": 300,
     "logUpload": false,
     "logLevel": "debug",
     "cloudProxy": true,

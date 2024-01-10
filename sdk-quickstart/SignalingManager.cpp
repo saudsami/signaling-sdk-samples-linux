@@ -58,6 +58,7 @@ SignalingManager::SignalingManager()
       RtmConfig cfg;
       cfg.appId = appId.c_str();
       cfg.userId = uid.c_str();
+      cfg.presenceTimeout = config["presenceTimeout"];
       cfg.eventHandler = eventHandler_.get();
       
       // Initialize the signalingEngine

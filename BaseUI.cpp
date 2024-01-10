@@ -64,7 +64,7 @@ void BaseUI::run() {
     showCommandList();
 
     while (true) {
-        std::cout << ">> ";
+        std::cout << WHITE << "> ";
         std::string input;
         std::getline(std::cin, input);
         processCommand(input);
