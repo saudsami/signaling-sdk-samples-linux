@@ -1,16 +1,17 @@
 #pragma once
 
-class SignalingManagerAuthentication; 
+class SignalingManagerAuthentication;
 
 #include "../sdk-quickstart/BaseSignalingEventHandler.h"
 
-class AuthenticationEventHandler : public BaseSignalingEventHandler {
+class AuthenticationEventHandler : public BaseSignalingEventHandler
+{
 public:
-    AuthenticationEventHandler(SignalingManager* manager);
+    AuthenticationEventHandler(SignalingManager *manager);
 
     // Override the onTokenPrivilegeWillExpire method
-    void onTokenPrivilegeWillExpire(const char* channelName) override;
+    void onTokenPrivilegeWillExpire(const char *channelName) override;
 
 private:
-    SignalingManagerAuthentication* signalingManagerAuthentication;
+    SignalingManagerAuthentication *signalingManagerAuthentication;
 };
