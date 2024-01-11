@@ -11,10 +11,12 @@
 #include "SignalingManager.h"
 #include "SignalingManagerAuthentication.h"
 #include "SignalingManagerPresence.h"
+#include "SignalingManagerStreamChannel.h"
 
 #include "QuickstartUI.h"
 #include "AuthenticationWorkflowUI.h"
 #include "PresenceUI.h"
+#include "StreamChannelUI.h"
 
 void mainMenu()
 {
@@ -24,7 +26,7 @@ void mainMenu()
     std::cout << WHITE << "1: SDK quickstart\n"
               << "2: Token authentication\n"
               << "3: Presence\n"
-              << "4: Stream channels quickstart\n"
+              << "4: Stream channels\n"
               << "5: Presence\n"
               << "0: Exit\n"
               << std::endl;
@@ -62,6 +64,13 @@ void mainMenu()
       SignalingManagerPresence signalingManager;
       PresenceUI presenceUI(signalingManager);
       presenceUI.run();
+    }
+    break;
+    case 4:
+    {
+      SignalingManagerStreamChannel signalingManager;
+      StreamChannelUI StreamChannelUI(signalingManager);
+      StreamChannelUI.run();
     }
     break;
     case 0:

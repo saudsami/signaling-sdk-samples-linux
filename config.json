@@ -1,5 +1,5 @@
 {
-    "uid": "123",
+    "uid": "101",
     "appId": "17cb7ec4e5d845498de0f75eeac4273a",
     "channelName": "demoChannel",
     "token": "007eJxSYPiY5NG95+bRqTt2KbNLi03y6FgYrLiKX4DLpk3xgFZikL4Cg6F5cpJ5arJJqmmKhYmpiaVFSqpBmrlpampisomRuXGiq+3c1AItRob8n4rMjAxMDIwMjAwgPjODoZExIAAA//81nRsu",
@@ -14,6 +14,6 @@
     "logLevel": "debug",
     "cloudProxy": true,
     "useStringUserId": false,
-    "rtcToken": ""
+    "rtcToken": "007eJxSYJgqMVMzt21NoOrynKqJmVs3ys82s5r9iHPK/9q9bK+LcwUVGAzNk5PMU5NNUk1TLExMTSwtUlIN0sxNU1MTk02MzI0TO07PT/3gz8hw6+AUVkYGCATxWRhSUnPzmRkMDQwBAQAA//+qdiGM"
   }
   
