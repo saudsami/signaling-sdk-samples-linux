@@ -24,7 +24,7 @@ void SignalingManagerStreamChannel::joinStreamChannel(std::string channelName)
     }
 
     // Join the stream channel
-    std::string rtcToken = config["rtcToken"];
+    std::string rtcToken = fetchRTCToken(channelName); //config["rtcToken"];
     JoinChannelOptions options;
     options.token = rtcToken.c_str();
     options.withLock = true;
@@ -76,12 +76,12 @@ void SignalingManagerStreamChannel::subscribeTopic(std::string topicName)
 {
     uint64_t requestId; // Output parameter used to identify and process the result
     TopicOptions topicOptions;
-    const char *user1 = "UserA";
-    const char *user2 = "UserB";
+    const char *user1 = "1";
+    const char *user2 = "2";
 
-    const char *user_list[2] = {user1, user2};
+    const char *userList[2] = {user1, user2};
     topicOptions.userCount = 2;
-    topicOptions.users = user_list;
+    topicOptions.users = userList;
 
     int ret = streamChannel->subscribeTopic(topicName.c_str(), topicOptions, requestId);
     if (ret != RTM_ERROR_OK)

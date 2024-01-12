@@ -11,11 +11,11 @@ void StreamChannelEventHandler::onJoinResult(const uint64_t requestId, const cha
 {
     if (errorCode != RTM_ERROR_OK)
     {
-        printf("join rtm channel failed error: %d reason: %s\n", errorCode, getErrorReason(errorCode));
+        printf("Join stream channel failed error: %d reason: %s\n", errorCode, getErrorReason(errorCode));
     }
     else
     {
-        printf("join rtm channel %s success\n", channelName);
+        printf("Join stream channel %s success\n", channelName);
     }
 }
 
@@ -23,11 +23,11 @@ void StreamChannelEventHandler::onLeaveResult(const uint64_t requestId, const ch
 {
     if (errorCode != RTM_ERROR_OK)
     {
-        printf("leave rtm channel failed error: %d reason: %s\n", errorCode, getErrorReason(errorCode));
+        printf("Leave stream channel failed error: %d reason: %s\n", errorCode, getErrorReason(errorCode));
     }
     else
     {
-        printf("leave rtm channel %s success\n", channelName);
+        printf("Leave stream channel %s success\n", channelName);
     }
 }
 

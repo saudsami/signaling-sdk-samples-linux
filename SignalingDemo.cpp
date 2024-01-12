@@ -23,14 +23,16 @@ void mainMenu()
   bool quit = false;
   while (!quit)
   {
-    std::cout << WHITE << "1: SDK quickstart\n"
+    std::cout << MAGENTA "Welcome to the Signaling demo for Linux C++:\n"
+              << WHITE 
+              << "1: SDK quickstart\n"
               << "2: Token authentication\n"
               << "3: Presence\n"
               << "4: Stream channels\n"
-              << "5: Presence\n"
+              << "5: Storage\n"
               << "0: Exit\n"
               << std::endl;
-    std::cout << YELLOW << "Choose an example: ";
+    std::cout << YELLOW << "Choose a sample project: ";
     std::string input;
     std::getline(std::cin, input);
     int32_t choice = 0;
@@ -87,7 +89,6 @@ void mainMenu()
 
 int main(int argc, const char *argv[])
 {
-
   mainMenu();
   return 0;
 }
