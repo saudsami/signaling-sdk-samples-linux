@@ -15,12 +15,12 @@ void SignalingManagerStreamChannel::joinStreamChannel(std::string channelName)
     streamChannel = signalingEngine->createStreamChannel(channelName.c_str());
     if (streamChannel == nullptr)
     {
-        printf("create stream channel failed");
+        printf("create stream channel failed\n");
         return;
     }
     else
     {
-        printf("create stream channel success");
+        printf("create stream channel success\n");
     }
 
     // Join the stream channel
@@ -43,6 +43,7 @@ void SignalingManagerStreamChannel::leaveStreamChannel(std::string channelName)
 {
     uint64_t requestId; // Output parameter used to identify and process the result
     int ret = streamChannel->leave(requestId);
+    
     if (ret != RTM_ERROR_OK)
     {
         printf("leave rtm channel failed error: %d reason: %s\n", ret, getErrorReason(ret));
@@ -51,9 +52,11 @@ void SignalingManagerStreamChannel::leaveStreamChannel(std::string channelName)
 
 void SignalingManagerStreamChannel::joinTopic(std::string topicName)
 {
-    uint64_t requestId; // Output parameter used to identify and process the result
-    JoinTopicOptions topicOptions;
     
+    JoinTopicOptions topicOptions;
+    topicOptions.qos = RTM_MESSAGE_QOS_ORDERED;
+    uint64_t requestId; // Output parameter used to identify and process the result
+
     int ret = streamChannel->joinTopic(topicName.c_str(), topicOptions, requestId);
 
     if (ret != RTM_ERROR_OK)

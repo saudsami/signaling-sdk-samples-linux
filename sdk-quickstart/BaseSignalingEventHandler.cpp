@@ -33,6 +33,21 @@ void BaseSignalingEventHandler::onMessageEvent(const MessageEvent &event)
     cbPrint("received message from: %s, message: %s", event.publisher, event.message);
 }
 
+void BaseSignalingEventHandler::onPresenceEvent(const PresenceEvent &event)
+{
+    if (event.type == RTM_PRESENCE_EVENT_TYPE_REMOTE_JOIN_CHANNEL)
+    {
+        cbPrint("presence: remote user joined, publisher: %d", event.type, event.publisher);
+    }
+    else if (event.type == RTM_PRESENCE_EVENT_TYPE_REMOTE_LEAVE_CHANNEL)
+    {
+        cbPrint("presence: remote user left, publisher: %d", event.type, event.publisher);
+    }
+    {
+        cbPrint("presence event: %d, publisher: %s", event.type, event.publisher);
+    }
+}
+
 void BaseSignalingEventHandler::onSubscribeResult(const uint64_t requestId, const char *channelName, RTM_ERROR_CODE errorCode)
 {
     cbPrint("onSubscribeResult: channel:%s, request id: %llu result: %d", channelName, requestId, errorCode);
