@@ -75,18 +75,18 @@ void SignalingManagerStreamChannel::leaveTopic(std::string topicName)
     }
 }
 
-void SignalingManagerStreamChannel::subscribeTopic(std::string topicName)
+void SignalingManagerStreamChannel::subscribeTopic(std::string topicName, std::string user)
 {
     uint64_t requestId; // Output parameter used to identify and process the result
     TopicOptions topicOptions;
-    /*
-    const char *user1 = "1";
-    const char *user2 = "2";
+    
+    // Initialize an empty userList
+    const char *userCStr = user.c_str();
 
-    const char *userList[2] = {user1, user2};
-    topicOptions.userCount = 2;
-    topicOptions.users = userList;
-*/
+    topicOptions.userCount = 1;
+    topicOptions.users = &userCStr;
+    //topicOptions.users = userList;
+
     int ret = streamChannel->subscribeTopic(topicName.c_str(), topicOptions, requestId);
     if (ret != RTM_ERROR_OK)
     {

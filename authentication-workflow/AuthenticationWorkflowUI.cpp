@@ -15,7 +15,7 @@ void AuthenticationWorkflowUI::showHeader()
 void AuthenticationWorkflowUI::showCommandList()
 {
   std::cout << GREEN << "Choose from the following commands:\n"
-            << YELLOW << "login <UserId>" << GREEN << " Acquire a token for <UserId> and log in to Signaling\n"
+            << YELLOW << "login <userId>" << GREEN << " Acquire a token for <UserId> and log in to Signaling\n"
             << YELLOW << "subscribe <channelName>" << GREEN << " Subscribe to a Messaging channel\n"
             << YELLOW << "unsubscribe <channelName>" << GREEN << " Unsubscribe from a Messaging channel\n"
             << YELLOW << "send <channelName> <message>" << GREEN << " Send a <message> to a <channelName> \n"
