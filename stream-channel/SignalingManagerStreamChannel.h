@@ -12,6 +12,7 @@ public:
     void joinTopic(std::string topicName);
     void leaveTopic(std::string topicName);
     void subscribeTopic(std::string topicName);
+    void publishTopicMessage(std::string topic, std::string message);
 
 protected:
     IStreamChannel *streamChannel;

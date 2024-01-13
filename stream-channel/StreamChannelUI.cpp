@@ -14,15 +14,17 @@ void StreamChannelUI::showHeader()
 
 void StreamChannelUI::showCommandList()
 {
-  AuthenticationWorkflowUI::showCommandList();
-
-  std::cout << WHITE << "Stream Channel commands:\n"
-            << YELLOW << "join <channelName>" << GREEN << "  Create and join a Stream channel\n"
-            << YELLOW << "leave <channelName>" << GREEN << " Leave a Stream channel\n"
-            << YELLOW << "joinTopic <topicName> <key> <value>" << GREEN << " Join a topic to send messages\n"
-            << YELLOW << "subscribeTopic <topicName> <key>" << GREEN << " Subscribe to a topic to receive messages \n"
-            << YELLOW << "leaveTopic <topicName> <userId>" << GREEN << " Leave a topic\n";
-            
+  std::cout
+      << WHITE << "Choose from the following commands:\n"
+      << YELLOW << "login" << GREEN << " Log in to Signaling\n"
+      << YELLOW << "join <channelName>" << GREEN << "  Create and join a Stream channel\n"
+      << YELLOW << "leave <channelName>" << GREEN << " Leave a Stream channel\n"
+      << YELLOW << "joinTopic <topicName> <key> <value>" << GREEN << " Join a topic to send messages\n"
+      << YELLOW << "publishTopicMessage <topicName> <message>" << GREEN << " Send a <message> to a <topicName> \n"
+      << YELLOW << "subscribeTopic <topicName> <key>" << GREEN << " Subscribe to a topic to receive messages \n"
+      << YELLOW << "leaveTopic <topicName> <userId>" << GREEN << " Leave a topic\n"
+      << YELLOW << "logout" << GREEN << " Log out of Signaling\n"
+      << YELLOW << "quit" << GREEN << " Exit this demo\n";
 }
 void StreamChannelUI::processCommand(std::string input)
 {
@@ -56,6 +58,10 @@ void StreamChannelUI::processCommand(std::string input)
   else if (command == "leaveTopic" && tokens.size() > 1)
   {
     signalingManagerStreamChannel.leaveTopic(tokens[1]);
+  }
+  else if (command == "publishTopicMessage" && tokens.size() > 1)
+  {
+    signalingManagerStreamChannel.publishTopicMessage(tokens[1], tokens[2]);
   }
   else
   {
