@@ -61,7 +61,7 @@ void SignalingManagerStreamChannel::joinTopic(std::string topicName)
 
     if (ret != RTM_ERROR_OK)
     {
-        printf("JoinTopic failed error: %d reason: %s\n", ret, getErrorReason(ret));
+        printf("joinTopic failed error: %d reason: %s\n", ret, getErrorReason(ret));
     }
 }
 
