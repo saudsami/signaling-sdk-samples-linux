@@ -44,15 +44,15 @@ void PresenceUI::processCommand(std::string input)
   {
     signalingManagerPresence.getUserChannels(tokens[1]);
   }
-  else if (command == "getState" && tokens.size() > 1)
+  else if (command == "getState" && tokens.size() > 2)
   {
     signalingManagerPresence.getState(tokens[1], tokens[2]);
   }
-  else if (command == "setState" && tokens.size() > 1)
+  else if (command == "setState" && tokens.size() > 3)
   {
     signalingManagerPresence.setState(tokens[1], tokens[2], tokens[3]);
   }
-  else if (command == "removeState" && tokens.size() > 1)
+  else if (command == "removeState" && tokens.size() > 2)
   {
     signalingManagerPresence.removeState(tokens[1], tokens[2]);
   }

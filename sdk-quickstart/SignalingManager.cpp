@@ -63,15 +63,16 @@ bool SignalingManager::isSubscribed() const
 
 void SignalingManager::login()
 {
-  RtmConfig cfg;
-  cfg.appId = appId.c_str();
-  cfg.userId = uid.c_str();
-  cfg.presenceTimeout = config["presenceTimeout"];
-  cfg.eventHandler = eventHandler_.get();
+  RtmConfig rtmConfig;
+  rtmConfig.appId = appId.c_str();
+  rtmConfig.userId = uid.c_str();
+  rtmConfig.presenceTimeout = config["presenceTimeout"];
+  rtmConfig.eventHandler = eventHandler_.get();
 
   // Initialize the signalingEngine
-  int ret = signalingEngine->initialize(cfg);
+  int ret = signalingEngine->initialize(rtmConfig);
   std::cout << "initialize returned: " << ret << std::endl;
+  
   if (ret)
   {
     std::cout << "Error initializing Signaling service: " << ret << std::endl;

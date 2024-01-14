@@ -17,6 +17,8 @@ add_library(${SIGNALLING_MANAGER_LIB} STATIC
     authentication-workflow/AuthenticationEventHandler.cpp
     presence/SignalingManagerPresence.cpp
     presence/PresenceEventHandler.cpp
+    stream-channel/SignalingManagerStreamChannel.cpp
+    stream-channel/StreamChannelEventHandler.cpp
 )
 
 # Include directory for library users
@@ -32,6 +34,7 @@ target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC
     ${CMAKE_SOURCE_DIR}/sdk-quickstart 
     ${CMAKE_SOURCE_DIR}/authentication-workflow
     ${CMAKE_SOURCE_DIR}/presence
+    ${CMAKE_SOURCE_DIR}/stream-channel
 )
 target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC ${CURL_LIBRARIES})
 
@@ -46,6 +49,7 @@ add_executable(${TARGET_NAME}
     sdk-quickstart/QuickstartUI.cpp 
     authentication-workflow/AuthenticationWorkflowUI.cpp
     presence/PresenceUI.cpp
+    stream-channel/StreamChannelUI.cpp
 )
 
 # Include and link directories

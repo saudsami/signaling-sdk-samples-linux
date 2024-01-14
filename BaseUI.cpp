@@ -14,10 +14,10 @@ void BaseUI::showHeader()
 
 void BaseUI::showCommandList()
 {
-  std::cout << GREEN << "Choose from the following commands:\n"
+  std::cout << WHITE << "Choose from the following commands:\n"
             << YELLOW << "login" << GREEN << " Log in to Signaling\n"
-            << YELLOW << "subscribe <channelName>" << GREEN << " Subscribe to a Signaling channel\n"
-            << YELLOW << "unsubscribe <channelName>" << GREEN << " Unsubscribe from a Signaling channel\n"
+            << YELLOW << "subscribe <channelName>" << GREEN << " Subscribe to a Messaging channel\n"
+            << YELLOW << "unsubscribe <channelName>" << GREEN << " Unsubscribe from a Messaging channel\n"
             << YELLOW << "send <channelName> <message>" << GREEN << " Send a <message> to a <channelName> \n"
             << YELLOW << "logout" << GREEN << " Log out of Signaling\n"
             << YELLOW << "quit" << GREEN << " Exit this demo\n";

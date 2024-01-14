@@ -19,11 +19,8 @@ size_t WriteCallback(void *contents, size_t size, size_t nmemb, std::string *out
     return totalSize;
 }
 
-std::string SignalingManagerAuthentication::fetchToken(std::string userId)
+std::string SignalingManagerAuthentication::fetchToken(std::string url)
 {
-    // Build the URL with the userId
-    std::string url = serverUrl + "/rtm/" + userId + "/?expiry=" + std::to_string(tokenExpiryTime);
-
     // Initialize cURL
     CURL *curl = curl_easy_init();
 
@@ -54,12 +51,20 @@ std::string SignalingManagerAuthentication::fetchToken(std::string userId)
             {
                 json responseJson = json::parse(responseData);
 
-                // Extract the rtmToken value
-                std::string rtmToken = responseJson["rtmToken"];
+                // Extract the token value
+                std::string token;
+                if (url.find("rtm") != std::string::npos)
+                {
+                    token = responseJson["rtmToken"];
+                }
+                else
+                {
+                    token = responseJson["rtcToken"];
+                }
 
                 // Cleanup and return the token
                 curl_easy_cleanup(curl);
-                return rtmToken;
+                return token;
             }
             catch (const std::exception &e)
             {
@@ -78,19 +83,35 @@ std::string SignalingManagerAuthentication::fetchToken(std::string userId)
     return ""; // Return an empty string in case of error
 }
 
+std::string SignalingManagerAuthentication::fetchRTMToken(std::string userId)
+{
+    // Build the URL with the userId
+    std::string url = serverUrl + "/rtm/" + userId + "/?expiry=" + std::to_string(tokenExpiryTime);
+    return fetchToken(url);
+}
+
+std::string SignalingManagerAuthentication::fetchRTCToken(std::string channelName)
+{
+    // Build the URL with the channelName
+    int role = 1;
+    std::string url = serverUrl + "/rtc/" + channelName + "/" + std::to_string(role) + "/uid/" + uid + "/?expiry=" + std::to_string(tokenExpiryTime);
+    return fetchToken(url);
+}
+
 void SignalingManagerAuthentication::loginWithToken(std::string userId)
 {
     std::cout << "Fetching token from the server..." << std::endl;
-    token = fetchToken(userId);
+    token = fetchRTMToken(userId);
     uid = userId;
 
-    RtmConfig cfg;
-    cfg.appId = appId.c_str();
-    cfg.userId = uid.c_str();
-    cfg.eventHandler = eventHandler_.get();
+    RtmConfig rtmConfig;
+    rtmConfig.appId = appId.c_str();
+    rtmConfig.userId = uid.c_str();
+    rtmConfig.presenceTimeout = config["presenceTimeout"];
+    rtmConfig.eventHandler = eventHandler_.get();
 
     // Initialize the signalingEngine
-    int ret = signalingEngine->initialize(cfg);
+    int ret = signalingEngine->initialize(rtmConfig);
     std::cout << "Initialize returned: " << ret << std::endl;
     if (ret)
     {
@@ -100,7 +121,7 @@ void SignalingManagerAuthentication::loginWithToken(std::string userId)
 
     // Log in using the token
     ret = signalingEngine->login(token.c_str());
-    std::cout << "Login returned:" << ret << std::endl;
+    std::cout << "Login returned: " << ret << std::endl;
     if (ret)
     {
         std::cout << "Login failed: " << ret << std::endl;
@@ -111,6 +132,6 @@ void SignalingManagerAuthentication::loginWithToken(std::string userId)
 int SignalingManagerAuthentication::renewToken()
 {
     std::cout << "Fetching token to renew expiring token..." << std::endl;
-    token = fetchToken(uid);
+    token = fetchRTMToken(uid);
     return signalingEngine->renewToken(token.c_str());
 }
