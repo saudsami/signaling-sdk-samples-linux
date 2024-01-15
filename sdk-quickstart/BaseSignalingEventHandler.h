@@ -17,7 +17,7 @@ class BaseSignalingEventHandler : public IRtmEventHandler
 public:
   BaseSignalingEventHandler(SignalingManager *manager);
   // Add the event listener
-  void onMessageEvent(const MessageEvent &event) override;
+  void onMessageEvent(const MessageEvent& event) override;
   void onPresenceEvent(const PresenceEvent& event) override;
   void onLoginResult(RTM_ERROR_CODE errorCode) override;
   void onConnectionStateChanged(const char *channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason) override;

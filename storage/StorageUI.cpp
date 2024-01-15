@@ -18,11 +18,11 @@ void StorageUI::showCommandList()
 
   std::cout << WHITE << "Storage commands\n"
             << GREEN << "Manage locks:\n"
-            << YELLOW << "setLock <lockName>" << GREEN << " Set a lock\n"
-            << YELLOW << "acquireLock <lockName>" << GREEN << " Acquire a lock\n"
-            << YELLOW << "releaseLock <lockName>" << GREEN << " Release a lock\n"
-            << YELLOW << "removeLock <lockName>" << GREEN << " Remove a lock\n"
-            << YELLOW << "getLock <lockName>" << GREEN << " Get a lock\n";
+            << YELLOW << "setLock <lockName>" << GREEN << " Create and configure a lock\n"
+            << YELLOW << "acquireLock <lockName>" << GREEN << " Obtain the right to use a lock a lock\n"
+            << YELLOW << "releaseLock <lockName>" << GREEN << " Release a lock when you are done using it\n"
+            << YELLOW << "removeLock <lockName>" << GREEN << " Delete a lock\n"
+            << YELLOW << "getLocks <channelName>" << GREEN << " Query the number, name, and other information about locks in a channel,\n";
 }
 void StorageUI::processCommand(std::string input)
 {
@@ -43,19 +43,19 @@ void StorageUI::processCommand(std::string input)
   }
   else if (command == "acquireLock" && tokens.size() > 1)
   {
-    // signalingManagerStorage.getUserChannels(tokens[1]);
+    signalingManagerStorage.acquireLock(tokens[1]);
   }
-  else if (command == "releaseLock" && tokens.size() > 2)
+  else if (command == "releaseLock" && tokens.size() > 1)
   {
-    // signalingManagerStorage.getState(tokens[1], tokens[2]);
+    signalingManagerStorage.releaseLock(tokens[1]);
   }
-  else if (command == "removeLock" && tokens.size() > 3)
+  else if (command == "removeLock" && tokens.size() > 1)
   {
-    // signalingManagerStorage.setState(tokens[1], tokens[2], tokens[3]);
+    signalingManagerStorage.removeLock(tokens[1]);
   }
-  else if (command == "getLock" && tokens.size() > 2)
+  else if (command == "getLocks" && tokens.size() > 1)
   {
-    // signalingManagerStorage.removeState(tokens[1], tokens[2]);
+    signalingManagerStorage.getLocks(tokens[1]);
   }
   else
   {
