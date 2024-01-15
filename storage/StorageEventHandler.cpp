@@ -7,3 +7,6 @@ StorageEventHandler::StorageEventHandler(SignalingManager *manager)
     signalingManagerStorage = static_cast<SignalingManagerStorage *>(signalingManager);
 }
 
+void onLockEvent(const LockEvent &event) {
+    cbPrint("Lock event ")
+}

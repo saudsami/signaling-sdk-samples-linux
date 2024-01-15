@@ -7,7 +7,7 @@ class SignalingManagerStorage : public SignalingManagerAuthentication
 {
 public:
     SignalingManagerStorage();
-    void setLock(std::string locklName);
+    void setLock(std::string lockName);
     
 private:
 };
