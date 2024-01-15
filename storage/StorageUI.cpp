@@ -26,7 +26,9 @@ void StorageUI::showCommandList()
             << GREEN << "Manage metadata:\n"
             << YELLOW << "getChannelMetadata <channelName>" << GREEN << "  Obtain the Metadata of the specified channel\n"
             << YELLOW << "getUserMetadata <userId>" << GREEN << "  Obtain the Metadata of the specified user\n"
-            << YELLOW << "removeLock <lockName>" << GREEN << " Delete a lock\n";
+            << YELLOW << "setChannelMetadata <channelName> <key> <value>" << GREEN << " Set a key-value pair in the channel Metadata\n"
+            << YELLOW << "updateChannelMetadata <channelName> <key> <value>" << GREEN << " Set a key-value pair in the channel Metadata\n"
+            << YELLOW << "removeChannelMetadata <channelName> <key>" << GREEN << " Remove a key-value pair in the channel Metadata\n";
 }
 void StorageUI::processCommand(std::string input)
 {
@@ -68,6 +70,18 @@ void StorageUI::processCommand(std::string input)
   else if (command == "getUserMetadata" && tokens.size() > 1)
   {
     signalingManagerStorage.getUserMetadata(tokens[1]);
+  }
+  else if (command == "setChannelMetadata" && tokens.size() > 3)
+  {
+    signalingManagerStorage.setChannelMetadata(tokens[1], tokens[2], tokens[3]);
+  }
+  else if (command == "updateChannelMetadata" && tokens.size() > 3)
+  {
+    signalingManagerStorage.updateChannelMetadata(tokens[1], tokens[2], tokens[3]);
+  }
+  else if (command == "removeChannelMetadata" && tokens.size() > 2)
+  {
+    signalingManagerStorage.removeChannelMetadata(tokens[1], tokens[2]);
   }
   else
   {
