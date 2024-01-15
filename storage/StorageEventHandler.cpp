@@ -7,6 +7,27 @@ StorageEventHandler::StorageEventHandler(SignalingManager *manager)
     signalingManagerStorage = static_cast<SignalingManagerStorage *>(signalingManager);
 }
 
+std::string StorageEventHandler::getLockEventDescription(RTM_LOCK_EVENT_TYPE eventType)
+{
+    static const std::unordered_map<RTM_LOCK_EVENT_TYPE, std::string> eventDescriptions = {
+        {RTM_LOCK_EVENT_TYPE_SNAPSHOT, "Snapshot information of Lock when joining the channel."},
+        {RTM_LOCK_EVENT_TYPE_LOCK_SET, "Lock has been set."},
+        {RTM_LOCK_EVENT_TYPE_LOCK_REMOVED, "Lock has been deleted."},
+        {RTM_LOCK_EVENT_TYPE_LOCK_ACQUIRED, "Lock has been obtained."},
+        {RTM_LOCK_EVENT_TYPE_LOCK_RELEASED, "Lock has been released."},
+        {RTM_LOCK_EVENT_TYPE_LOCK_EXPIRED, "Lock has expired."}};
+
+    auto it = eventDescriptions.find(eventType);
+    if (it != eventDescriptions.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        return "Unknown Lock Event Type.";
+    }
+}
+
 void StorageEventHandler::onLockEvent(const LockEvent &event)
 {
     cbPrint(("Lock event: " + getLockEventDescription(event.eventType)).c_str());
@@ -78,23 +99,41 @@ void StorageEventHandler::onRemoveLockResult(const uint64_t requestId, const cha
     }
 }
 
-std::string StorageEventHandler::getLockEventDescription(RTM_LOCK_EVENT_TYPE eventType)
+void StorageEventHandler::onGetChannelMetadataResult(const uint64_t requestId, const char *channelName, RTM_CHANNEL_TYPE channelType, const IMetadata &data, RTM_ERROR_CODE errorCode) 
 {
-    static const std::unordered_map<RTM_LOCK_EVENT_TYPE, std::string> eventDescriptions = {
-        {RTM_LOCK_EVENT_TYPE_SNAPSHOT, "Snapshot information of Lock when joining the channel."},
-        {RTM_LOCK_EVENT_TYPE_LOCK_SET, "Lock has been set."},
-        {RTM_LOCK_EVENT_TYPE_LOCK_REMOVED, "Lock has been deleted."},
-        {RTM_LOCK_EVENT_TYPE_LOCK_ACQUIRED, "Lock has been obtained."},
-        {RTM_LOCK_EVENT_TYPE_LOCK_RELEASED, "Lock has been released."},
-        {RTM_LOCK_EVENT_TYPE_LOCK_EXPIRED, "Lock has expired."}};
-
-    auto it = eventDescriptions.find(eventType);
-    if (it != eventDescriptions.end())
+    if (errorCode != RTM_ERROR_OK)
     {
-        return it->second;
+        printf("getChannelMetadata failed error is %d reason is %s\n", errorCode, getErrorReason(errorCode));
     }
     else
     {
-        return "Unknown Lock Event Type.";
+        printf("getChannelMetadata success\n");
+        const MetadataItem *items;
+        size_t size;
+        data.getMetadataItems(&items, &size);
+        for (int i = 0; i < size; i++)
+        {
+            printf("key: %s value: %s revison: %ld\n", items[i].key, items[i].value, items[i].revision);
+        }
     }
 }
+
+void StorageEventHandler::onGetUserMetadataResult(const uint64_t requestId, const char *userId, const IMetadata &data, RTM_ERROR_CODE errorCode) 
+{
+    if (errorCode != RTM_ERROR_OK)
+    {
+        printf("getUserMetadata failed error is %d reason is %s\n", errorCode, getErrorReason(errorCode));
+    }
+    else
+    {
+        printf("getUserMetadata success user id: %s\n", userId);
+        const MetadataItem *items;
+        size_t size;
+        data.getMetadataItems(&items, &size);
+        for (int i = 0; i < size; i++)
+        {
+            printf("key: %s value: %s revison: %ld\n", items[i].key, items[i].value, items[i].revision);
+        }
+    }
+}
+

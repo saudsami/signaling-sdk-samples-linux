@@ -22,7 +22,11 @@ void StorageUI::showCommandList()
             << YELLOW << "acquireLock <lockName>" << GREEN << " Obtain the right to use a lock a lock\n"
             << YELLOW << "releaseLock <lockName>" << GREEN << " Release a lock when you are done using it\n"
             << YELLOW << "removeLock <lockName>" << GREEN << " Delete a lock\n"
-            << YELLOW << "getLocks <channelName>" << GREEN << " Query the number, name, and other information about locks in a channel,\n";
+            << YELLOW << "getLocks <channelName>" << GREEN << " Query the number, name, and other information about locks in a channel,\n"
+            << GREEN << "Manage metadata:\n"
+            << YELLOW << "getChannelMetadata <channelName>" << GREEN << "  Obtain the Metadata of the specified channel\n"
+            << YELLOW << "getUserMetadata <userId>" << GREEN << "  Obtain the Metadata of the specified user\n"
+            << YELLOW << "removeLock <lockName>" << GREEN << " Delete a lock\n";
 }
 void StorageUI::processCommand(std::string input)
 {
@@ -56,6 +60,14 @@ void StorageUI::processCommand(std::string input)
   else if (command == "getLocks" && tokens.size() > 1)
   {
     signalingManagerStorage.getLocks(tokens[1]);
+  }
+  else if (command == "getChannelMetadata" && tokens.size() > 1)
+  {
+    signalingManagerStorage.getChannelMetadata(tokens[1]);
+  }
+  else if (command == "getUserMetadata" && tokens.size() > 1)
+  {
+    signalingManagerStorage.getUserMetadata(tokens[1]);
   }
   else
   {

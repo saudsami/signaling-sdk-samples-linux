@@ -59,3 +59,24 @@ void SignalingManagerStorage::getLocks(std::string channelName)
         printf("getLocks failed error is %d reason is %s\n", ret, getErrorReason(ret));
     }
 }
+
+void SignalingManagerStorage::getChannelMetadata(std::string channelName)
+{
+    uint64_t requestId; // Output parameter used to identify and process the result
+    int ret = signalingEngine->getStorage()->getChannelMetadata(channelName.c_str(), channelType, requestId);
+    if (ret != RTM_ERROR_OK)
+    {
+        printf("getChannelMetadata failed error is %d reason is %s\n", ret, getErrorReason(ret));
+    }
+}
+
+void SignalingManagerStorage::getUserMetadata(std::string userId)
+{
+    uint64_t requestId; // Output parameter used to identify and process the result
+    int ret = signalingEngine->getStorage()->getUserMetadata(userId.c_str(), requestId);
+    if (ret != RTM_ERROR_OK)
+    {
+        printf("getUserMetadata failed error is %d reason is %s\n", ret, getErrorReason(ret));
+    }
+}
+

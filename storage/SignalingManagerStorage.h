@@ -12,5 +12,7 @@ public:
     void releaseLock(std::string lockName);
     void removeLock(std::string lockName);
     void getLocks(std::string channelName);
+    void getChannelMetadata(std::string channelName);
+    void getUserMetadata(std::string userId);
 private:
 };
