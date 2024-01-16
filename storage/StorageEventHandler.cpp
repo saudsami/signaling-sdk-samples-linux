@@ -28,6 +28,32 @@ std::string StorageEventHandler::getLockEventDescription(RTM_LOCK_EVENT_TYPE eve
     }
 }
 
+std::string StorageEventHandler::getStorageEventDescription(RTM_STORAGE_EVENT_TYPE eventType)
+{
+    static const std::unordered_map<RTM_STORAGE_EVENT_TYPE, std::string> eventDescriptions = {
+        {RTM_STORAGE_EVENT_TYPE_SNAPSHOT, "RTM_STORAGE_EVENT_TYPE_SNAPSHOT"},
+        {RTM_STORAGE_EVENT_TYPE_REMOVE, "RTM_STORAGE_EVENT_TYPE_REMOVE"},
+        {RTM_STORAGE_EVENT_TYPE_SET, "RTM_STORAGE_EVENT_TYPE_SET"},
+        {RTM_STORAGE_EVENT_TYPE_UPDATE, "RTM_STORAGE_EVENT_TYPE_UPDATE"}};
+        
+
+    auto it = eventDescriptions.find(eventType);
+    if (it != eventDescriptions.end())
+    {
+        return it->second;
+    }
+    else
+    {
+        return "Unknown Storage Event Type.";
+    }
+}
+
+
+void StorageEventHandler::onStorageEvent(const StorageEvent &event)
+{
+    cbPrint(("Lock event: " + getStorageEventDescription(event.eventType)).c_str());
+}
+
 void StorageEventHandler::onLockEvent(const LockEvent &event)
 {
     cbPrint(("Lock event: " + getLockEventDescription(event.eventType)).c_str());

@@ -19,17 +19,20 @@ void StorageUI::showCommandList()
   std::cout << WHITE << "Storage commands\n"
             << GREEN << "Manage locks:\n"
             << YELLOW << "setLock <lockName>" << GREEN << " Create and configure a lock\n"
-            << YELLOW << "acquireLock <lockName>" << GREEN << " Obtain the right to use a lock a lock\n"
+            << YELLOW << "acquireLock <lockName>" << GREEN << " Obtain the right to use a lock\n"
             << YELLOW << "releaseLock <lockName>" << GREEN << " Release a lock when you are done using it\n"
             << YELLOW << "removeLock <lockName>" << GREEN << " Delete a lock\n"
-            << YELLOW << "getLocks <channelName>" << GREEN << " Query the number, name, and other information about locks in a channel,\n"
+            << YELLOW << "getLocks <channelName>" << GREEN << " Query the number, name, and other information about locks in a channel\n"
             << GREEN << "Manage metadata:\n"
-            << YELLOW << "getChannelMetadata <channelName>" << GREEN << "  Obtain the Metadata of the specified channel\n"
-            << YELLOW << "getUserMetadata <userId>" << GREEN << "  Obtain the Metadata of the specified user\n"
-            << YELLOW << "setChannelMetadata <key> <value> [<revision>] [<lockName>]" << GREEN << " Set a key-value pair in the channel Metadata\n"
-            << YELLOW << "updateChannelMetadata <key> <value> [<revision>] [<lockName>]" << GREEN << " Set a key-value pair in the channel Metadata\n"
-            << YELLOW << "removeChannelMetadata <key>" << GREEN << " Remove a key-value pair in the channel Metadata\n"
-            << YELLOW << "setUserMetadata <key> <value> [<revision>]" << GREEN << " Set a key-value pair in the user Metadata\n";
+            << YELLOW << "getChannelMetadata <channelName>" << GREEN << "  Obtain the metadata of the specified channel\n"
+            << YELLOW << "setChannelMetadata <key> <value> [<revision>] [<lockName>]" << GREEN << " Set a key-value pair in the channel metadata\n"
+            << YELLOW << "updateChannelMetadata <key> <value> [<revision>] [<lockName>]" << GREEN << " Update a value in the channel metadata\n"
+            << YELLOW << "removeChannelMetadata <key>" << GREEN << " Remove a key-value pair in the channel metadata\n"
+            << YELLOW << "getUserMetadata <userId>" << GREEN << "  Obtain the metadata of the specified user\n"
+            << YELLOW << "setUserMetadata <key> <value> [<revision>]" << GREEN << " Set a key-value pair in the user metadata\n"
+            << YELLOW << "removeUserMetadata <userId>" << GREEN << " Remove the specified key from the metadata of the user\n"
+            << YELLOW << "subscribeUserMetadata <userId>" << GREEN << " Subscribe to receive metadata change notifications\n"
+            << YELLOW << "unsubscribeUserMetadata <userId>" << GREEN << " Unsubscribe to stop receiving metadata change notifications\n";
 }
 void StorageUI::processCommand(std::string input)
 {
@@ -107,6 +110,18 @@ void StorageUI::processCommand(std::string input)
       revision = std::stoll(tokens[3]);
 
     signalingManagerStorage.setUserMetadata(tokens[1], tokens[2], revision);
+  }
+  else if (command == "removeUserMetadata" && tokens.size() > 1)
+  {
+    signalingManagerStorage.removeUserMetadata(tokens[1]);
+  }
+  else if (command == "subscribeUserMetadata" && tokens.size() > 1)
+  {
+    signalingManagerStorage.subscribeUserMetadata(tokens[1]);
+  }
+  else if (command == "unsubscribeUserMetadata" && tokens.size() > 1)
+  {
+    signalingManagerStorage.unsubscribeUserMetadata(tokens[1]);
   }
   else
   {

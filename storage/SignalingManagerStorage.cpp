@@ -150,12 +150,35 @@ void SignalingManagerStorage::setUserMetadata(std::string key, std::string value
         uid.c_str(), metadata, options, requestId);
 }
 
+void SignalingManagerStorage::removeUserMetadata(std::string key)
+{
+    IMetadata *metadata = signalingEngine->getStorage()->createMetadata();
+    MetadataOptions options;
+    MetadataItem item;
+    item.key = key.c_str();
+    item.revision = -1;
+    metadata->setMetadataItem(item);
+
+    uint64_t requestId; // Output parameter used to identify and process the result
+    int ret = signalingEngine->getStorage()->removeUserMetadata(
+        uid.c_str(), metadata, options, requestId);
+}
+
 void SignalingManagerStorage::subscribeUserMetadata(std::string userId)
 {
     uint64_t requestId; // Output parameter used to identify and process the result
-    ret = signalingEngine->getStorage()->subscribeUserMetadata(userId, requestId);
+    int ret = signalingEngine->getStorage()->subscribeUserMetadata(userId.c_str(), requestId);
     if (ret != RTM_ERROR_OK)
     {
         printf("subscribeUserMetadata failed error is %d reason is %s\n", ret, getErrorReason(ret));
+    }
+}
+
+void SignalingManagerStorage::unsubscribeUserMetadata(std::string userId)
+{
+    int ret = signalingEngine->getStorage()->unsubscribeUserMetadata(userId.c_str());
+    if (ret != RTM_ERROR_OK)
+    {
+        printf("unsubscribeUserMetadata failed error is %d reason is %s\n", ret, getErrorReason(ret));
     }
 }

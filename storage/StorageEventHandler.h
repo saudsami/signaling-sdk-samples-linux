@@ -9,6 +9,7 @@ class StorageEventHandler : public BaseSignalingEventHandler
 public:
     StorageEventHandler(SignalingManager *manager);
     // Override event handlers from the base class
+    void onStorageEvent(const StorageEvent &event) override;
     void onLockEvent(const LockEvent &event) override;
     void onSetLockResult(const uint64_t requestId,
                          const char *channelName, RTM_CHANNEL_TYPE channelType, const char *lockName,
@@ -23,4 +24,5 @@ public:
 private:
     SignalingManagerStorage *signalingManagerStorage;
     std::string getLockEventDescription(RTM_LOCK_EVENT_TYPE eventType);
+    std::string getStorageEventDescription(RTM_STORAGE_EVENT_TYPE eventType);
 };
