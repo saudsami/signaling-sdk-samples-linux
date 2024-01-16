@@ -26,10 +26,10 @@ void StorageUI::showCommandList()
             << GREEN << "Manage metadata:\n"
             << YELLOW << "getChannelMetadata <channelName>" << GREEN << "  Obtain the Metadata of the specified channel\n"
             << YELLOW << "getUserMetadata <userId>" << GREEN << "  Obtain the Metadata of the specified user\n"
-            << YELLOW << "setChannelMetadata <key> <value> <revision> <lockName>" << GREEN << " Set a key-value pair in the channel Metadata\n"
-            << YELLOW << "updateChannelMetadata <key> <value> <revision> <lockName>" << GREEN << " Set a key-value pair in the channel Metadata\n"
+            << YELLOW << "setChannelMetadata <key> <value> [<revision>] [<lockName>]" << GREEN << " Set a key-value pair in the channel Metadata\n"
+            << YELLOW << "updateChannelMetadata <key> <value> [<revision>] [<lockName>]" << GREEN << " Set a key-value pair in the channel Metadata\n"
             << YELLOW << "removeChannelMetadata <key>" << GREEN << " Remove a key-value pair in the channel Metadata\n"
-            << YELLOW << "setUserMetadata <channelName> <key> <value> <revision>" << GREEN << " Set a key-value pair in the user Metadata\n"
+            << YELLOW << "setUserMetadata <key> <value> [<revision>]" << GREEN << " Set a key-value pair in the user Metadata\n";
 }
 void StorageUI::processCommand(std::string input)
 {
@@ -74,30 +74,39 @@ void StorageUI::processCommand(std::string input)
   }
   else if (command == "setChannelMetadata" && tokens.size() > 2)
   {
-    if (tokens.size() == 3)
-    {
-      signalingManagerStorage.setChannelMetadata(tokens[1], tokens[2], -1, "");
-    }
-    else if (tokens.size() == 4)
-    {
-      signalingManagerStorage.setChannelMetadata(tokens[1], tokens[2], tokens[3], "");
-    }
-    else if (tokens.size() == 5)
-    {
-      signalingManagerStorage.setChannelMetadata(tokens[1], tokens[2], tokens[3], tokens[4]);
-    }
+    int64_t revision = -1;
+    std::string lockName = "";
+
+    if (tokens.size() > 4)
+      lockName = tokens[4];
+    if (tokens.size() > 3)
+      revision = std::stoll(tokens[3]);
+
+    signalingManagerStorage.setChannelMetadata(tokens[1], tokens[2], revision, lockName);
   }
-  else if (command == "updateChannelMetadata" && tokens.size() > 3)
+  else if (command == "updateChannelMetadata" && tokens.size() > 2)
   {
-    signalingManagerStorage.updateChannelMetadata(tokens[1], tokens[2], tokens[3]);
+    int64_t revision = -1;
+    std::string lockName = "";
+
+    if (tokens.size() > 4)
+      lockName = tokens[4];
+    if (tokens.size() > 3)
+      revision = std::stoll(tokens[3]);
+
+    signalingManagerStorage.updateChannelMetadata(tokens[1], tokens[2], revision, lockName);
   }
   else if (command == "removeChannelMetadata" && tokens.size() > 1)
   {
     signalingManagerStorage.removeChannelMetadata(tokens[1]);
   }
-  else if (command == "setUserMetadata" && tokens.size() > 3)
+  else if (command == "setUserMetadata" && tokens.size() > 2)
   {
-    signalingManagerStorage.setUserMetadata(tokens[1], tokens[2], tokens[3]);
+    int64_t revision = -1;
+    if (tokens.size() > 3)
+      revision = std::stoll(tokens[3]);
+
+    signalingManagerStorage.setUserMetadata(tokens[1], tokens[2], revision);
   }
   else
   {

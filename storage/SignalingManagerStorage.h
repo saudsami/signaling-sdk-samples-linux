@@ -19,5 +19,6 @@ public:
 
     void getUserMetadata(std::string userId);
     void setUserMetadata(std::string key, std::string value, int64_t revision);
+    void subscribeUserMetadata(std::string userId)
 private:
 };

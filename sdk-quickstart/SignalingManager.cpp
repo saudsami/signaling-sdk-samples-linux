@@ -107,6 +107,7 @@ void SignalingManager::subscribeChannel(std::string chnId)
   uint64_t req_id;
   int ret = signalingEngine->subscribe(chnId.c_str(), opt, req_id);
   std::cout << "subscribe channel returned: " << ret << std::endl;
+  if (ret == 0) channelName = chnId;
 }
 
 // Unsubscribe from a channel

@@ -12,16 +12,17 @@ SignalingManagerStreamChannel::SignalingManagerStreamChannel()
 void SignalingManagerStreamChannel::joinStreamChannel(std::string channelName)
 {
     // Create a stream channel
-    channelType = RTM_CHANNEL_TYPE_MESSAGE;
+    channelType = RTM_CHANNEL_TYPE_STREAM;
     streamChannel = signalingEngine->createStreamChannel(channelName.c_str());
     if (streamChannel == nullptr)
     {
-        printf("create stream channel failed\n");
+        printf("createStreamChannel failed\n");
         return;
     }
     else
     {
-        printf("create stream channel success\n");
+        printf("createStreamChannel success\n");
+        this->channelName = channelName;
     }
 
     // Join the stream channel
