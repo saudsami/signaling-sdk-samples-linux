@@ -19,6 +19,8 @@ add_library(${SIGNALLING_MANAGER_LIB} STATIC
     presence/PresenceEventHandler.cpp
     stream-channel/SignalingManagerStreamChannel.cpp
     stream-channel/StreamChannelEventHandler.cpp
+    storage/SignalingManagerStorage.cpp
+    storage/StorageEventHandler.cpp
 )
 
 # Include directory for library users
@@ -35,6 +37,7 @@ target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC
     ${CMAKE_SOURCE_DIR}/authentication-workflow
     ${CMAKE_SOURCE_DIR}/presence
     ${CMAKE_SOURCE_DIR}/stream-channel
+    ${CMAKE_SOURCE_DIR}/storage
 )
 target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC ${CURL_LIBRARIES})
 
@@ -50,6 +53,7 @@ add_executable(${TARGET_NAME}
     authentication-workflow/AuthenticationWorkflowUI.cpp
     presence/PresenceUI.cpp
     stream-channel/StreamChannelUI.cpp
+    storage/StorageUI.cpp
 )
 
 # Include and link directories

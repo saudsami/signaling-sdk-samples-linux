@@ -12,11 +12,13 @@
 #include "SignalingManagerAuthentication.h"
 #include "SignalingManagerPresence.h"
 #include "SignalingManagerStreamChannel.h"
+#include "SignalingManagerStorage.h"
 
 #include "QuickstartUI.h"
 #include "AuthenticationWorkflowUI.h"
 #include "PresenceUI.h"
 #include "StreamChannelUI.h"
+#include "StorageUI.h"
 
 void mainMenu()
 {
@@ -24,7 +26,7 @@ void mainMenu()
   while (!quit)
   {
     std::cout << MAGENTA "Welcome to the Signaling demo for Linux C++:\n"
-              << WHITE 
+              << WHITE
               << "1: SDK quickstart\n"
               << "2: Token authentication\n"
               << "3: Presence\n"
@@ -73,6 +75,12 @@ void mainMenu()
       SignalingManagerStreamChannel signalingManager;
       StreamChannelUI StreamChannelUI(signalingManager);
       StreamChannelUI.run();
+    }
+    case 5:
+    {
+      SignalingManagerStorage signalingManager;
+      StorageUI StorageUI(signalingManager);
+      StorageUI.run();
     }
     break;
     case 0:

@@ -12,15 +12,17 @@ SignalingManagerStreamChannel::SignalingManagerStreamChannel()
 void SignalingManagerStreamChannel::joinStreamChannel(std::string channelName)
 {
     // Create a stream channel
+    channelType = RTM_CHANNEL_TYPE_STREAM;
     streamChannel = signalingEngine->createStreamChannel(channelName.c_str());
     if (streamChannel == nullptr)
     {
-        printf("create stream channel failed\n");
+        printf("createStreamChannel failed\n");
         return;
     }
     else
     {
-        printf("create stream channel success\n");
+        printf("createStreamChannel success\n");
+        this->channelName = channelName;
     }
 
     // Join the stream channel
@@ -33,10 +35,7 @@ void SignalingManagerStreamChannel::joinStreamChannel(std::string channelName)
 
     uint64_t requestId; // Output parameter used to identify and process the result
     int ret = streamChannel->join(options, requestId);
-    if (ret != RTM_ERROR_OK)
-    {
-        printf("join channel failed error: %d reason: %s\n", ret, getErrorReason(ret));
-    }
+    std::cout << "setLock returned: " << ret << std::endl;
 }
 
 void SignalingManagerStreamChannel::leaveStreamChannel(std::string channelName)

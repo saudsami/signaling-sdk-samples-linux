@@ -34,6 +34,7 @@ protected:
   std::string token;
   std::string uid;
   std::string channelName;
+  RTM_CHANNEL_TYPE channelType = RTM_CHANNEL_TYPE_MESSAGE;
 
 private:
   bool isLoggedIn_;
