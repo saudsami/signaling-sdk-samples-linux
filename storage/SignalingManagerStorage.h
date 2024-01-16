@@ -13,10 +13,11 @@ public:
     void removeLock(std::string lockName);
     void getLocks(std::string channelName);
     void getChannelMetadata(std::string channelName);
-    void setChannelMetadata(std::string channelName, std::string key, std::string value);
-    void updateChannelMetadata(std::string channelName, std::string key, std::string value);
-    void removeChannelMetadata(std::string channelName, std::string key);
+    void setChannelMetadata(std::string key, std::string value, int64_t revision, std::string lockName);
+    void updateChannelMetadata(std::string key, std::string value, int64_t revision, std::string lockName);
+    void removeChannelMetadata(std::string key);
 
     void getUserMetadata(std::string userId);
+    void setUserMetadata(std::string key, std::string value, int64_t revision);
 private:
 };

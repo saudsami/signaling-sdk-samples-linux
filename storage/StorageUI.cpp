@@ -26,9 +26,10 @@ void StorageUI::showCommandList()
             << GREEN << "Manage metadata:\n"
             << YELLOW << "getChannelMetadata <channelName>" << GREEN << "  Obtain the Metadata of the specified channel\n"
             << YELLOW << "getUserMetadata <userId>" << GREEN << "  Obtain the Metadata of the specified user\n"
-            << YELLOW << "setChannelMetadata <channelName> <key> <value>" << GREEN << " Set a key-value pair in the channel Metadata\n"
-            << YELLOW << "updateChannelMetadata <channelName> <key> <value>" << GREEN << " Set a key-value pair in the channel Metadata\n"
-            << YELLOW << "removeChannelMetadata <channelName> <key>" << GREEN << " Remove a key-value pair in the channel Metadata\n";
+            << YELLOW << "setChannelMetadata <key> <value> <revision> <lockName>" << GREEN << " Set a key-value pair in the channel Metadata\n"
+            << YELLOW << "updateChannelMetadata <key> <value> <revision> <lockName>" << GREEN << " Set a key-value pair in the channel Metadata\n"
+            << YELLOW << "removeChannelMetadata <key>" << GREEN << " Remove a key-value pair in the channel Metadata\n"
+            << YELLOW << "setUserMetadata <channelName> <key> <value> <revision>" << GREEN << " Set a key-value pair in the user Metadata\n"
 }
 void StorageUI::processCommand(std::string input)
 {
@@ -71,17 +72,32 @@ void StorageUI::processCommand(std::string input)
   {
     signalingManagerStorage.getUserMetadata(tokens[1]);
   }
-  else if (command == "setChannelMetadata" && tokens.size() > 3)
+  else if (command == "setChannelMetadata" && tokens.size() > 2)
   {
-    signalingManagerStorage.setChannelMetadata(tokens[1], tokens[2], tokens[3]);
+    if (tokens.size() == 3)
+    {
+      signalingManagerStorage.setChannelMetadata(tokens[1], tokens[2], -1, "");
+    }
+    else if (tokens.size() == 4)
+    {
+      signalingManagerStorage.setChannelMetadata(tokens[1], tokens[2], tokens[3], "");
+    }
+    else if (tokens.size() == 5)
+    {
+      signalingManagerStorage.setChannelMetadata(tokens[1], tokens[2], tokens[3], tokens[4]);
+    }
   }
   else if (command == "updateChannelMetadata" && tokens.size() > 3)
   {
     signalingManagerStorage.updateChannelMetadata(tokens[1], tokens[2], tokens[3]);
   }
-  else if (command == "removeChannelMetadata" && tokens.size() > 2)
+  else if (command == "removeChannelMetadata" && tokens.size() > 1)
   {
-    signalingManagerStorage.removeChannelMetadata(tokens[1], tokens[2]);
+    signalingManagerStorage.removeChannelMetadata(tokens[1]);
+  }
+  else if (command == "setUserMetadata" && tokens.size() > 3)
+  {
+    signalingManagerStorage.setUserMetadata(tokens[1], tokens[2], tokens[3]);
   }
   else
   {

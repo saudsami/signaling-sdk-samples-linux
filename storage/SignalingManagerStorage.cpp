@@ -80,15 +80,14 @@ void SignalingManagerStorage::getUserMetadata(std::string userId)
     }
 }
 
-void SignalingManagerStorage::setChannelMetadata(std::string channelName, std::string key, std::string value)
+void SignalingManagerStorage::setChannelMetadata(std::string key, std::string value, int64_t revision, std::string lockName)
 {
-    std::string lockName = "";
     IMetadata* metadata = signalingEngine->getStorage()->createMetadata();
     MetadataOptions options;
     MetadataItem item;
     item.key = key.c_str();
     item.value = value.c_str();
-    item.revision = -1;
+    item.revision = revision;
     item.authorUserId = uid.c_str();
     metadata->setMetadataItem(item);
 
@@ -99,16 +98,14 @@ void SignalingManagerStorage::setChannelMetadata(std::string channelName, std::s
         lockName.c_str(), requestId);
 }
 
-void SignalingManagerStorage::updateChannelMetadata(std::string channelName, std::string key, std::string value)
+void SignalingManagerStorage::updateChannelMetadata(std::string key, std::string value, int64_t revision, std::string lockName)
 {
-    std::string lockName = "";
     IMetadata* metadata = signalingEngine->getStorage()->createMetadata();
     MetadataOptions options;
     MetadataItem item;
     item.key = key.c_str();
     item.value = value.c_str();
-    item.revision = -1;
-    //item.authorUserId = uid.c_str();
+    item.revision = revision;
     metadata->setMetadataItem(item);
 
     uint64_t requestId; // Output parameter used to identify and process the result
@@ -118,15 +115,13 @@ void SignalingManagerStorage::updateChannelMetadata(std::string channelName, std
         lockName.c_str(), requestId);
 }
 
-void SignalingManagerStorage::removeChannelMetadata(std::string channelName, std::string key)
+void SignalingManagerStorage::removeChannelMetadata(std::string key)
 {
     std::string lockName = "";
     IMetadata* metadata = signalingEngine->getStorage()->createMetadata();
     MetadataOptions options;
     MetadataItem item;
     item.key = key.c_str();
-    //item.value = value.c_str();
-    //item.revision = -1;
     metadata->setMetadataItem(item);
 
     uint64_t requestId; // Output parameter used to identify and process the result
@@ -134,4 +129,21 @@ void SignalingManagerStorage::removeChannelMetadata(std::string channelName, std
         channelName.c_str(), channelType,
         metadata, options,
         lockName.c_str(), requestId);
+}
+
+void SignalingManagerStorage::setUserMetadata(std::string key, std::string value, int64_t revision)
+{
+    IMetadata* metadata = signalingEngine->getStorage()->createMetadata();
+    MetadataOptions options;
+    MetadataItem item;
+    item.key = key.c_str();
+    item.value = value.c_str();
+    item.revision = revision;
+    item.authorUserId = uid.c_str();
+    metadata->setMetadataItem(item);
+
+    uint64_t requestId; // Output parameter used to identify and process the result
+    int ret = signalingEngine->getStorage()->setUserMetadata(
+        uid.c_str(), channelType,
+        metadata, options, requestId);
 }
