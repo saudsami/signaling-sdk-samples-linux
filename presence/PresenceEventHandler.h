@@ -2,9 +2,9 @@
 
 class SignalingManagerPresence;
 
-#include "../sdk-quickstart/BaseSignalingEventHandler.h"
+#include "../authentication-workflow/AuthenticationEventHandler.h"
 
-class PresenceEventHandler : public BaseSignalingEventHandler
+class PresenceEventHandler : public AuthenticationEventHandler
 {
 public:
     PresenceEventHandler(SignalingManager *manager);

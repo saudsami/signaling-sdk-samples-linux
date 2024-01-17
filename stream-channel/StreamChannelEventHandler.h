@@ -2,9 +2,9 @@
 
 class SignalingManagerStreamChannel;
 
-#include "../sdk-quickstart/BaseSignalingEventHandler.h"
+#include "../authentication-workflow/AuthenticationEventHandler.h"
 
-class StreamChannelEventHandler : public BaseSignalingEventHandler
+class StreamChannelEventHandler : public AuthenticationEventHandler
 {
 public:
     StreamChannelEventHandler(SignalingManager *manager);

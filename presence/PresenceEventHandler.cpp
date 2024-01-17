@@ -2,7 +2,7 @@
 #include "SignalingManagerPresence.h"
 
 PresenceEventHandler::PresenceEventHandler(SignalingManager *manager)
-    : BaseSignalingEventHandler(manager)
+    : AuthenticationEventHandler(manager)
 {
     signalingManagerPresence = static_cast<SignalingManagerPresence *>(signalingManager);
 }

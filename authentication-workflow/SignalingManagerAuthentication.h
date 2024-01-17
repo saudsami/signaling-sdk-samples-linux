@@ -9,7 +9,7 @@ public:
     SignalingManagerAuthentication();
     std::string fetchRTMToken(std::string userId);
     std::string fetchRTCToken(std::string channelName);
-    void loginWithToken(std::string userId);
+    virtual void loginWithToken(std::string userId);
     int renewToken();
 
 private:
