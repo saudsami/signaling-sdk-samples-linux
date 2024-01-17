@@ -3,10 +3,10 @@
 #include "../authentication-workflow/SignalingManagerAuthentication.h"
 #include "../authentication-workflow/AuthenticationEventHandler.h"
 
-class SignalingManagerEncryption : public SignalingManagerAuthentication
+class SignalingManagerProxy : public SignalingManagerAuthentication
 {
 public:
-    SignalingManagerEncryption();
+    SignalingManagerProxy();
     void loginWithToken(std::string userId) override;
 
 private:

@@ -22,7 +22,8 @@ add_library(${SIGNALLING_MANAGER_LIB} STATIC
     storage/SignalingManagerStorage.cpp
     storage/StorageEventHandler.cpp
     data-encryption/SignalingManagerEncryption.cpp
-    data-encryption/EncryptionEventHandler.cpp
+    geofencing/SignalingManagerGeofencing.cpp
+    proxy-service/SignalingManagerProxy.cpp
 )
 
 # Include directory for library users
@@ -41,6 +42,8 @@ target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC
     ${CMAKE_SOURCE_DIR}/stream-channel
     ${CMAKE_SOURCE_DIR}/storage
     ${CMAKE_SOURCE_DIR}/data-encryption
+    ${CMAKE_SOURCE_DIR}/geofencing
+    ${CMAKE_SOURCE_DIR}/proxy-service
 )
 target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC ${CURL_LIBRARIES})
 
@@ -58,6 +61,8 @@ add_executable(${TARGET_NAME}
     stream-channel/StreamChannelUI.cpp
     storage/StorageUI.cpp
     data-encryption/EncryptionUI.cpp
+    geofencing/GeofencingUI.cpp
+    proxy-service/ProxyUI.cpp
 )
 
 # Include and link directories

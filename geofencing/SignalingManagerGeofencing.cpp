@@ -1,15 +1,15 @@
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
-#include "SignalingManagerEncryption.h"
+#include "SignalingManagerGeofencing.h"
 
-SignalingManagerEncryption::SignalingManagerEncryption()
+SignalingManagerGeofencing::SignalingManagerGeofencing()
     : SignalingManagerAuthentication()
 {
     // Additional initialization
     eventHandler_ = std::unique_ptr<AuthenticationEventHandler>(new AuthenticationEventHandler(this));
 }
 
-void SignalingManagerEncryption::loginWithToken(std::string userId)
+void SignalingManagerGeofencing::loginWithToken(std::string userId)
 {
     std::cout << "Fetching token from the server..." << std::endl;
     token = fetchRTMToken(userId);
@@ -21,11 +21,8 @@ void SignalingManagerEncryption::loginWithToken(std::string userId)
     rtmConfig.presenceTimeout = config["presenceTimeout"];
     rtmConfig.eventHandler = eventHandler_.get();
 
-    std::cout << "Enabling data encryption\n";
-    uint8_t salt[32] = {1,2,3,4,5,6,7,8};
-    rtmConfig.encryptionConfig.encryptionKey = "your_encryption_key";
-    rtmConfig.encryptionConfig.encryptionMode = RTM_ENCRYPTION_MODE_AES_256_GCM;
-    memcpy(rtmConfig.encryptionConfig.encryptionSalt, salt, 32);
+    std::cout << "Setting area code\n";
+    rtmConfig.areaCode = RTM_AREA_CODE_NA;
 
     // Initialize the signalingEngine
     int ret = signalingEngine->initialize(rtmConfig);

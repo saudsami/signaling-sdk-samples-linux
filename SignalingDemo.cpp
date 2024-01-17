@@ -14,6 +14,8 @@
 #include "SignalingManagerStreamChannel.h"
 #include "SignalingManagerStorage.h"
 #include "SignalingManagerEncryption.h"
+#include "SignalingManagerGeofencing.h"
+#include "SignalingManagerProxy.h"
 
 #include "QuickstartUI.h"
 #include "AuthenticationWorkflowUI.h"
@@ -21,6 +23,8 @@
 #include "StreamChannelUI.h"
 #include "StorageUI.h"
 #include "EncryptionUI.h"
+#include "GeofencingUI.h"
+#include "ProxyUI.h"
 
 void mainMenu()
 {
@@ -35,6 +39,8 @@ void mainMenu()
               << "4: Stream channels\n"
               << "5: Storage\n"
               << "6: Data encryption\n"
+              << "7: Geofencing\n"
+              << "8: Proxy service\n"
               << "0: Exit\n"
               << std::endl;
     std::cout << YELLOW << "Choose a sample project: ";
@@ -90,6 +96,20 @@ void mainMenu()
       SignalingManagerEncryption signalingManager;
       EncryptionUI encryptionUI(signalingManager);
       encryptionUI.run();
+    }
+    break;
+    case 7:
+    {
+      SignalingManagerGeofencing signalingManager;
+      GeofencingUI geofencingUI(signalingManager);
+      geofencingUI.run();
+    }
+    break;
+    case 8:
+    {
+      SignalingManagerProxy signalingManager;
+      ProxyUI proxyUI(signalingManager);
+      proxyUI.run();
     }
     break;
     case 0:
