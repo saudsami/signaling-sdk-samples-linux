@@ -2,7 +2,7 @@
 #include "SignalingManagerStorage.h"
 
 StorageEventHandler::StorageEventHandler(SignalingManager *manager)
-    : BaseSignalingEventHandler(manager)
+    : AuthenticationEventHandler(manager)
 {
     signalingManagerStorage = static_cast<SignalingManagerStorage *>(signalingManager);
 }

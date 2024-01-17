@@ -2,9 +2,9 @@
 
 class SignalingManagerEncryption;
 
-#include "../sdk-quickstart/BaseSignalingEventHandler.h"
+#include "../authentication-workflow/AuthenticationEventHandler.h"
 
-class EncryptionEventHandler : public BaseSignalingEventHandler
+class EncryptionEventHandler : public AuthenticationEventHandler
 {
 public:
     EncryptionEventHandler(SignalingManager *manager);

@@ -104,8 +104,8 @@ void SignalingManager::subscribeChannel(std::string chnId)
 {
   channelType = RTM_CHANNEL_TYPE_MESSAGE;
   SubscribeOptions opt = SubscribeOptions();
-  uint64_t req_id;
-  int ret = signalingEngine->subscribe(chnId.c_str(), opt, req_id);
+  uint64_t requestId;
+  int ret = signalingEngine->subscribe(chnId.c_str(), opt, requestId);
   std::cout << "subscribe channel returned: " << ret << std::endl;
   if (ret == 0) channelName = chnId;
 }
@@ -113,7 +113,7 @@ void SignalingManager::subscribeChannel(std::string chnId)
 // Unsubscribe from a channel
 void SignalingManager::unsubscribeChannel(std::string chnId)
 {
-  uint64_t req_id;
+  uint64_t requestId;
   int ret = signalingEngine->unsubscribe(chnId.c_str());
   std::cout << "unsubscribe channel returned: " << ret << std::endl;
 }
@@ -128,9 +128,9 @@ void SignalingManager::publishMessage(std::string chn, std::string msg)
 
   PublishOptions opt;
   opt.messageType = RTM_MESSAGE_TYPE_STRING;
-  uint64_t req_id;
-  int ret = signalingEngine->publish(chn.c_str(), msg.c_str(), msg.size(), opt, req_id);
-  std::cout << "publishMessage returned: " << ret << " request id: %llu" << req_id << std::endl;
+  uint64_t requestId;
+  int ret = signalingEngine->publish(chn.c_str(), msg.c_str(), msg.size(), opt, requestId);
+  std::cout << "publishMessage returned: " << ret << std::endl;
 }
 
 void SignalingManager::updateLoginStatus(bool isLoggedIn)

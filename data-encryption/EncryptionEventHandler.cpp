@@ -2,7 +2,7 @@
 #include "SignalingManagerEncryption.h"
 
 EncryptionEventHandler::EncryptionEventHandler(SignalingManager *manager)
-    : BaseSignalingEventHandler(manager)
+    : AuthenticationEventHandler(manager)
 {
     signalingManagerEncryption = static_cast<SignalingManagerEncryption *>(signalingManager);
 }

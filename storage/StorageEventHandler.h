@@ -2,9 +2,9 @@
 
 class SignalingManagerStorage;
 
-#include "../sdk-quickstart/BaseSignalingEventHandler.h"
+#include "../authentication-workflow/AuthenticationEventHandler.h"
 
-class StorageEventHandler : public BaseSignalingEventHandler
+class StorageEventHandler : public AuthenticationEventHandler
 {
 public:
     StorageEventHandler(SignalingManager *manager);

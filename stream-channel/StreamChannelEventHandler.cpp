@@ -2,7 +2,7 @@
 #include "SignalingManagerStreamChannel.h"
 
 StreamChannelEventHandler::StreamChannelEventHandler(SignalingManager *manager)
-    : BaseSignalingEventHandler(manager)
+    : AuthenticationEventHandler(manager)
 {
   signalingManagerStreamChannel = static_cast<SignalingManagerStreamChannel *>(signalingManager);
 }

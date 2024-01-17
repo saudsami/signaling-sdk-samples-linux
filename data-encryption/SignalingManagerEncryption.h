@@ -7,6 +7,7 @@ class SignalingManagerEncryption : public SignalingManagerAuthentication
 {
 public:
     SignalingManagerEncryption();
+    void loginWithToken(std::string userId) override;
 
 private:
 };
