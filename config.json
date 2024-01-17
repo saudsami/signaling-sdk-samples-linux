@@ -8,7 +8,6 @@
     "presenceTimeout": 300,
     "logUpload": false,
     "logLevel": "debug",
-    "cloudProxy": true,
     "useStringUserId": false,
     "rtcToken": "007eJxSYJgqMVMzt21NoOrynKqJmVs3ys82s5r9iHPK/9q9bK+LcwUVGAzNk5PMU5NNUk1TLExMTSwtUlIN0sxNU1MTk02MzI0TO07PT/3gz8hw6+AUVkYGCATxWRhSUnPzmRkMDQwBAQAA//+qdiGM"
   }
