@@ -21,6 +21,8 @@ add_library(${SIGNALLING_MANAGER_LIB} STATIC
     stream-channel/StreamChannelEventHandler.cpp
     storage/SignalingManagerStorage.cpp
     storage/StorageEventHandler.cpp
+    data-encryption/SignalingManagerEncryption.cpp
+    data-encryption/EncryptionEventHandler.cpp
 )
 
 # Include directory for library users
@@ -38,6 +40,7 @@ target_include_directories(${SIGNALLING_MANAGER_LIB} PUBLIC
     ${CMAKE_SOURCE_DIR}/presence
     ${CMAKE_SOURCE_DIR}/stream-channel
     ${CMAKE_SOURCE_DIR}/storage
+    ${CMAKE_SOURCE_DIR}/data-encryption
 )
 target_link_libraries(${SIGNALLING_MANAGER_LIB} PUBLIC ${CURL_LIBRARIES})
 
@@ -54,6 +57,7 @@ add_executable(${TARGET_NAME}
     presence/PresenceUI.cpp
     stream-channel/StreamChannelUI.cpp
     storage/StorageUI.cpp
+    data-encryption/EncryptionUI.cpp
 )
 
 # Include and link directories
