@@ -13,16 +13,15 @@ This repository holds the code examples used for the [Agora Signaling SDK for Li
 
 The runnable code examples are:
 
-- [SDK quickstart](./README.md) - the minimum code you need to integrate low-latency, high-concurrency
-  signaling features into your app using Signaling SDK.
-- [Secure authentication with tokens](./README.md) - quickly set up an authentication token server, retrieve a token from the server, and use it to connect securely to Signaling as a specific user.
-- [Stream channels](./README.md) - communicate to other users in topics.
-- [Store channel and user data](./README.md) - easily store data for users and channels without the need to
-  set up your own databases. 
-- [Connect through restricted networks with Cloud Proxy](./README.md) - ensure reliable connectivity for your users when they connect from an
-  environment with a restricted network.
-- [Data encryption](./README.md) - integrate built-in data encryption into your app using Signaling.
-- [Geofencing](./README.md) - only connect to Signaling within the specified region.
+- [SDK quickstart](./sdk-quickstart/README.md) - the minimum code you need to integrate low-latency, high-concurrency signaling features into your app using Signaling SDK.
+- [Token authentication](./authentication-workflow/README.md) - retrieve a token from the server, and use it to connect securely to Signaling as a specific user.
+- [Presence](./stream-channel/README.md) - get information about the status of users in specified channels.
+- [Stream channels](./stream-channel/README.md) - communicate with other users in topics.
+- [Store channel and user data](./storage/README.md) - easily store data for users and channels without the need to set up your own database. 
+- [Data Encryption](./data-encryption/README.md) - integrate built-in data encryption into your Signaling app.
+- [Geofencing](./geofencing/README.md) - only connect to Signaling within the specified region.
+- [Proxy Connection](./proxy-service/README.md) - ensure reliable connectivity for your users when they connect from an environment with a restricted network.
+
 
 ## Prerequisites
 
