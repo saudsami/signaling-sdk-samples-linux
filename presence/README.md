@@ -1,26 +1,19 @@
-# Store channel and user data
+# Presence
 
-Signaling storage enables you to save channel and user attributes in an easy-to-use, serverless storage system. This feature helps you build innovative, reliable, and scalable applications without the need to set up your own database.
+In real-time messaging solutions, it is often important to know whether a user is currently online or offline. For example, in instant messaging, chat applications, and online collaboration tools, users need to see the availability of their contacts. This information is typically displayed as a status message or icon next to a user's name. Presence features in Signaling SDK enable you to monitor join, leave, and status change notifications for users in a channel. Using Presence features, you can:
 
-Your app receives metadata modification events in real-time enabling you to update the front-end accordingly. You can leverage user and channel metadata in Signaling apps to:
-
-- Personalize user profiles: Create user profiles that include additional information such as the user's full name, a 
-profile picture URL, geographic location, and availability status.
-
-- Maintain chat history: Store and display chat history, including timestamps and message status such as whether a message has been read or not.
-
-- Maintain search history: Enable users to quickly search for specific messages, users, or topics within the app.
-
-- Customize notifications: Enable users to customize their notification settings, such as choosing notifications to receive and setting custom alert tones.
-
-- Enhance security: Enforce security measures, such as verifying user identity and encrypting messages.
+* Get a list of users currently in a channel and their temporary status data.
+* Get a list of channels a specified user has joined or is subscribed to.
+* Read, set, or remove user status.
+* Receive real-time event notifications when users join or leave specified channels.
+* Receive user status change event notifications in real time.
 
 ## Understand the code
 
-For context on this sample, and a full explanation of the essential code snippets used in this project, read [Store channel and user data](https://docs.agora.io/en/signaling/develop/storage?platform=linux-cpp)
+For context on this sample, and a full explanation of the essential code snippets used in this project, read [Presence](https://docs-beta.agora.io/en/signaling/develop/presence?platform=linux-cpp)
 
 
 ## How to run this project
 
-To see how to run this project, read the instructions in the main [README](../README.md) or [SDK quickstart](https://docs.agora.io/en/signaling/get-started/get-started-sdk).
+To see how to run this project, read the instructions in the main [README](../README.md) or [SDK quickstart](https://docs-beta.agora.io/en/signaling/get-started/get-started-sdk).
 
